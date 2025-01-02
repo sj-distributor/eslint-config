@@ -3,9 +3,20 @@
   "type": "module",
   "version": "1.0.0",
   "description": "SJ Distributor Avenger Team ESLint Config",
-  "main": "index.js",
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsup",
+    "lint": "eslint ."
   },
   "keywords": [
     "eslint",
@@ -19,6 +30,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.10.3",
+    "tsup": "^8.3.5",
     "typescript": "^5.7.2"
   }
 }
