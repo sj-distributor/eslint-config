@@ -118,7 +118,7 @@ export async function reactConfig(
       ? [{
           files: filesTypeAware,
           ignores: ignoresTypeAware,
-          name: 'antfu/react/type-aware-rules',
+          name: 'sj-distributor/react/type-aware-rules',
           rules: {},
       }]
       : [],
