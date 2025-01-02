@@ -1,9 +1,3 @@
-import path from 'path';
+import { avenger } from './main';
 
-export function getDir() {
-  return __dirname;
-}
-
-export function resolvePath(relativePath: string) {
-  return path.resolve(__dirname, relativePath);
-}
+export default avenger;
