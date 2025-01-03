@@ -2,7 +2,7 @@ import type { OptionsOverrides, FlatConfigItem } from '../../types'
 
 import globals from 'globals'
 
-import { RULES } from './rule'
+import { RULES } from './rules'
 import { default as pluginUnusedImports } from 'eslint-plugin-unused-imports'
 
 export const javascriptConfig = async (

@@ -1,3 +1,4 @@
-export * from './react-config/react-config';
-export * from './ignores-config';
-export * from './javascript-config/javascript-config';
+export * from './react/config';
+export * from './ignores';
+export * from './javascript/config';
+export * from './typescript/config';

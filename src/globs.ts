@@ -14,6 +14,7 @@ export const globs = {
   xml: '**/*.xml',
   svg: '**/*.svg',
   html: '**/*.htm?(l)',
+  astro: '**/*.astro/*.ts'
 };
 
 export const GLOB_EXCLUDE = [

@@ -3,7 +3,7 @@ import type { OptionsConfig, Awaitable, FlatConfigItem } from './types/types';
 import { isPackageExists } from 'local-pkg';
 import type { Linter } from 'eslint';
 import { getOverrides, resolveSubOptions } from './utils';
-import { ignoreConfig, javascriptConfig, reactConfig } from './configs';
+import { ignoreConfig, javascriptConfig, reactConfig, typescriptConfig } from './configs';
 
 export const avenger = (
   options: OptionsConfig & Omit<FlatConfigItem, 'files'> = {},
@@ -13,13 +13,14 @@ export const avenger = (
     react: enableReact,
     typescript: enableTypeScript = isPackageExists('typescript'),
     ignores,
-    overrides = {}
+    // overrides = {},
+    componentExts = [],
   } = options;
 
   // Initialize an array to hold configuration items
   const configs: Awaitable<FlatConfigItem[]>[] = [];
 
-  const typescriptOptions = resolveSubOptions(options, 'typescript')
+  const typescriptOptions:any = resolveSubOptions(options, 'typescript')
   // const tsconfigPath = 'tsconfigPath' in typescriptOptions ? typescriptOptions.tsconfigPath : undefined
   
   configs.push(
@@ -29,14 +30,14 @@ export const avenger = (
     })
   );
 
-  // if (enableTypeScript) {
-  //   configs.push(typescriptConfig({
-  //     ...typescriptOptions,
-  //     componentExts,
-  //     overrides: getOverrides(options, 'typescript'),
-  //     type: options.type,
-  //   }))
-  // }
+  if (enableTypeScript) {
+    configs.push(typescriptConfig({
+      ...typescriptOptions,
+      componentExts,
+      overrides: getOverrides(options, 'typescript'),
+      // type: options.type,
+    }))
+  }
   
   if (enableReact) {
     configs.push(reactConfig());

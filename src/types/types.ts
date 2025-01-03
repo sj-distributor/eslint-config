@@ -85,10 +85,21 @@ export type OptionsTypescript =
   (OptionsTypeScriptWithTypes & OptionsOverrides)
   | (OptionsTypeScriptParserOptions & OptionsOverrides)
 
+
+export interface OptionsComponentExts {
+  /**
+   * 组件文件扩展名
+   *
+   * @example ['react', 'vue']
+   * @default []
+   */
+  componentExts?: string[]
+}
+
 /**
  * 主配置选项
  */
-export interface OptionsConfig {
+export interface OptionsConfig extends OptionsComponentExts {
   /**
    * 是否启用 React 配置
    */

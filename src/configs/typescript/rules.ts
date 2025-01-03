@@ -1,0 +1,25 @@
+import type { FlatConfigItem } from 'src/types';
+
+export const RULES: FlatConfigItem['rules'] = {
+  'dot-notation': 'off',
+  'no-implied-eval': 'off',
+  'ts/await-thenable': 'error',
+  'ts/dot-notation': ['error', { allowKeywords: true }],
+  'ts/no-floating-promises': 'error',
+  'ts/no-for-in-array': 'error',
+  'ts/no-implied-eval': 'error',
+  'ts/no-misused-promises': 'error',
+  'ts/no-unnecessary-type-assertion': 'error',
+  'ts/no-unsafe-argument': 'error',
+  'ts/no-unsafe-assignment': 'error',
+  'ts/no-unsafe-call': 'error',
+  'ts/no-unsafe-member-access': 'error',
+  'ts/no-unsafe-return': 'error',
+  'ts/promise-function-async': 'error',
+  'ts/restrict-plus-operands': 'error',
+  'ts/restrict-template-expressions': 'error',
+  'ts/return-await': ['error', 'in-try-catch'],
+  'ts/strict-boolean-expressions': ['error', { allowNullableBoolean: true, allowNullableObject: true }],
+  'ts/switch-exhaustiveness-check': 'error',
+  'ts/unbound-method': 'error',
+}
