@@ -77,9 +77,6 @@ dist
 # IDE
 .idea
 
-*.lerna_backup
-_fixtures
-
 .temp
 .history
 

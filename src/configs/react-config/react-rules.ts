@@ -1,4 +1,4 @@
-import type { FlatConfigItem } from 'src/types';
+import type { FlatConfigItem } from '../../types';
 
 export const REACT_RULES: FlatConfigItem['rules'] = {
   // recommended rules from @eslint-react/dom

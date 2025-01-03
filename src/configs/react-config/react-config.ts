@@ -1,5 +1,5 @@
-import type { FlatConfigItem } from 'src/types/types';
-import { ensureDependenciesInstalled, resolveModule } from 'src/utils';
+import type { FlatConfigItem } from '../../types/types';
+import { ensureDependenciesInstalled, resolveModule } from '../../utils';
 import { REACT_RULES } from './react-rules';
 
 export async function reactConfig(): Promise<FlatConfigItem[]> {
