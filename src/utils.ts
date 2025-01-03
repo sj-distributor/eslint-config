@@ -1,8 +1,9 @@
 import { isPackageExists } from 'local-pkg';
-import type { Awaitable } from './types';
+import type { Awaitable, OptionsConfig, ResolvedOptions } from './types';
 import { fileURLToPath } from 'node:url';
 import { installPackage } from '@antfu/install-pkg';
 import { confirm } from '@clack/prompts';
+import type { Linter } from 'eslint';
 
 // 获取当前模块所在目录的路径
 const SCOPE_PATH = fileURLToPath(new URL('.', import.meta.url));
@@ -50,4 +51,26 @@ export async function ensureDependenciesInstalled(packages: (string | undefined)
   });
 
   shouldInstall && await installPackage(missingPackages, { dev: true });
+}
+
+export function resolveSubOptions<K extends keyof OptionsConfig>(
+  options: OptionsConfig,
+  key: K,
+): ResolvedOptions<OptionsConfig[K]> {
+  return typeof options[key] === 'boolean'
+    ? {} as any
+    : options[key] || {}
+}
+
+export function getOverrides<K extends keyof OptionsConfig>(
+  options: OptionsConfig,
+  key: K,
+): Partial<Linter.RulesRecord> {
+  const sub = resolveSubOptions(options, key)
+  return {
+    ...(options.overrides as any)?.[key],
+    ...'overrides' in sub
+      ? sub.overrides
+      : {},
+  }
 }

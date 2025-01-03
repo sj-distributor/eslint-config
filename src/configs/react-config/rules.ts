@@ -1,6 +1,6 @@
 import type { FlatConfigItem } from '../../types';
 
-export const REACT_RULES: FlatConfigItem['rules'] = {
+export const RULES: FlatConfigItem['rules'] = {
   // recommended rules from @eslint-react/dom
   'react-dom/no-children-in-void-dom-elements': 'warn',
   'react-dom/no-dangerously-set-innerhtml': 'warn',

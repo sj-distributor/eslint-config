@@ -1,31 +1,52 @@
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
 import type { OptionsConfig, Awaitable, FlatConfigItem } from './types/types';
 import { isPackageExists } from 'local-pkg';
-import { reactConfig } from './configs/react-config';
 import type { Linter } from 'eslint';
+import { getOverrides, resolveSubOptions } from './utils';
+import { ignoreConfig, javascriptConfig, reactConfig } from './configs';
 
 export const avenger = (
   options: OptionsConfig & Omit<FlatConfigItem, 'files'> = {},
   ...customConfigs: Awaitable<Linter.Config | FlatConfigItem | FlatConfigItem[] | FlatConfigComposer<any, any>>[]
 ): FlatConfigComposer<FlatConfigItem> => {
   const {
-    react: enableReact = true,
-    typescript: enableTypescript = isPackageExists('typescript'),
+    react: enableReact,
+    typescript: enableTypeScript = isPackageExists('typescript'),
+    ignores,
     overrides = {}
   } = options;
 
   // Initialize an array to hold configuration items
-  const confgis: Awaitable<FlatConfigItem[]>[] = [];
+  const configs: Awaitable<FlatConfigItem[]>[] = [];
 
+  const typescriptOptions = resolveSubOptions(options, 'typescript')
+  // const tsconfigPath = 'tsconfigPath' in typescriptOptions ? typescriptOptions.tsconfigPath : undefined
+  
+  configs.push(
+    ignoreConfig(ignores),
+    javascriptConfig({
+      overrides: getOverrides(options, 'javascript'),
+    })
+  );
+
+  // if (enableTypeScript) {
+  //   configs.push(typescriptConfig({
+  //     ...typescriptOptions,
+  //     componentExts,
+  //     overrides: getOverrides(options, 'typescript'),
+  //     type: options.type,
+  //   }))
+  // }
+  
   if (enableReact) {
-    confgis.push(reactConfig());
+    configs.push(reactConfig());
   }
 
   let composer = new FlatConfigComposer<FlatConfigItem>();
 
   composer = composer
     .append(
-      ...confgis,
+      ...configs,
       ...customConfigs as any,
     );
 

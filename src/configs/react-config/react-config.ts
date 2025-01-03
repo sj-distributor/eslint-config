@@ -1,7 +1,7 @@
 import { globs } from '../../globs';
 import type { FlatConfigItem, OptionsFiles, OptionsOverrides, OptionsTypeScriptParserOptions, OptionsTypeScriptWithTypes } from '../../types/types';
 import { ensureDependenciesInstalled, resolveModule } from '../../utils';
-import { REACT_RULES } from './rules';
+import { RULES } from './rules';
 
 export const reactConfig = async (
   options: OptionsTypeScriptParserOptions & OptionsTypeScriptWithTypes & OptionsOverrides & OptionsFiles = {}
@@ -48,7 +48,7 @@ export const reactConfig = async (
         },
       },
       rules: {
-        ...REACT_RULES,
+        ...RULES,
         ...overrides,
       },
     }

@@ -16,9 +16,6 @@ export const globs = {
   html: '**/*.htm?(l)',
 };
 
-export const GLOB_SRC_EXT = '?([cm])[jt]s?(x)'
-export const GLOB_SRC = '**/*.?([cm])[jt]s?(x)'
-
 export const GLOB_EXCLUDE = [
   // 依赖锁定文件
   '**/package-lock.json',

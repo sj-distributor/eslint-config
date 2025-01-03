@@ -32,6 +32,7 @@
     "@typescript-eslint/eslint-plugin": "^8.19.0",
     "@typescript-eslint/parser": "^8.19.0",
     "eslint-flat-config-utils": "^0.4.0",
+    "eslint-plugin-unused-imports": "^4.1.4",
     "local-pkg": "^0.5.1"
   },
   "resolutions": {

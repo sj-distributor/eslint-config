@@ -77,6 +77,10 @@ export interface OptionsFiles {
   files?: string[];
 }
 
+export type ResolvedOptions<T> = T extends boolean
+  ? never
+  : NonNullable<T>
+
 export type OptionsTypescript =
   (OptionsTypeScriptWithTypes & OptionsOverrides)
   | (OptionsTypeScriptParserOptions & OptionsOverrides)
@@ -88,16 +92,21 @@ export interface OptionsConfig {
   /**
    * 是否启用 React 配置
    */
-  react?: boolean;
+  react?: boolean | OptionsOverrides;
   /**
    * 是否启用 TypeScript 配置
    */
   typescript?: boolean;
+  /**
+   * 是否启用 JavaScript 配置
+   */
+  javascript?: boolean;
   /**
    * 自定义规则覆盖
    */
   overrides?: {
     react?: FlatConfigItem['rules'];
     typescript?: FlatConfigItem['rules'];
+    javascript?: FlatConfigItem['rules']
   };
 }

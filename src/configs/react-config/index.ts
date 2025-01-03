@@ -1,1 +1,0 @@
-export { reactConfig } from './react-config'
