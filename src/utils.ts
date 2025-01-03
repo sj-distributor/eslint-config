@@ -1,5 +1,5 @@
 import { isPackageExists } from 'local-pkg';
-import type { Awaitable } from './types/types';
+import type { Awaitable } from './types';
 import { fileURLToPath } from 'node:url';
 import { installPackage } from '@antfu/install-pkg';
 import { confirm } from '@clack/prompts';

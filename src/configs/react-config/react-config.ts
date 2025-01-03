@@ -1,8 +1,15 @@
-import type { FlatConfigItem } from '../../types/types';
+import { globs } from '../../globs';
+import type { FlatConfigItem, OptionsFiles, OptionsOverrides, OptionsTypeScriptParserOptions, OptionsTypeScriptWithTypes } from '../../types/types';
 import { ensureDependenciesInstalled, resolveModule } from '../../utils';
-import { REACT_RULES } from './react-rules';
+import { REACT_RULES } from './rules';
 
-export async function reactConfig(): Promise<FlatConfigItem[]> {
+export const reactConfig = async (
+  options: OptionsTypeScriptParserOptions & OptionsTypeScriptWithTypes & OptionsOverrides & OptionsFiles = {}
+): Promise<FlatConfigItem[]> => {
+  const {
+    files = [globs.src],
+    overrides = {},
+  } = options;
 
   // 确保依赖已安装
   await ensureDependenciesInstalled([
@@ -28,13 +35,23 @@ export async function reactConfig(): Promise<FlatConfigItem[]> {
         'react-hooks-extra': plugins['@eslint-react/hooks-extra'],
         'react-naming-convention': plugins['@eslint-react/naming-convention'],
       },
+    },
+    {
+      files,
+      name: 'sj-distributor/react/rules',
+      languageOptions: {
+        sourceType: 'module',
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
+        },
+      },
       rules: {
         ...REACT_RULES,
-
-        // overrides
-        // ...overrides,
+        ...overrides,
       },
-    },
+    }
   ]
 
 }

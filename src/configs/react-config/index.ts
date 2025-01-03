@@ -1,1 +1,1 @@
-export * from "./react-config"
+export { reactConfig } from './react-config'
