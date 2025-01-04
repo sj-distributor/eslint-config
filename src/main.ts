@@ -1,9 +1,9 @@
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
-import type { OptionsConfig, Awaitable, FlatConfigItem } from './types/types';
+import type { OptionsConfig, Awaitable, FlatConfigItem } from './types';
 import { isPackageExists } from 'local-pkg';
 import type { Linter } from 'eslint';
 import { getOverrides, resolveSubOptions } from './utils';
-import { ignoreConfig, javascriptConfig, reactConfig, typescriptConfig } from './configs';
+import { ignoreConfig } from './configs';
 
 export const avenger = (
   options: OptionsConfig & Omit<FlatConfigItem, 'files'> = {},
@@ -25,23 +25,23 @@ export const avenger = (
   
   configs.push(
     ignoreConfig(ignores),
-    javascriptConfig({
-      overrides: getOverrides(options, 'javascript'),
-    })
+    // javascriptConfig({
+    //   overrides: getOverrides(options, 'javascript'),
+    // })
   );
 
-  if (enableTypeScript) {
-    configs.push(typescriptConfig({
-      ...typescriptOptions,
-      componentExts,
-      overrides: getOverrides(options, 'typescript'),
-      // type: options.type,
-    }))
-  }
+  // if (enableTypeScript) {
+  //   configs.push(typescriptConfig({
+  //     ...typescriptOptions,
+  //     componentExts,
+  //     overrides: getOverrides(options, 'typescript'),
+  //     // type: options.type,
+  //   }))
+  // }
   
-  if (enableReact) {
-    configs.push(reactConfig());
-  }
+  // if (enableReact) {
+  //   configs.push(reactConfig());
+  // }
 
   let composer = new FlatConfigComposer<FlatConfigItem>();
 
