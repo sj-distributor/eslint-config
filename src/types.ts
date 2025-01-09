@@ -50,6 +50,10 @@ export type OptionsTypescript =
   (OptionsTypeScriptWithTypes & OptionsOverrides)
   | (OptionsTypeScriptParserOptions & OptionsOverrides)
 
+export type ResolvedOptions<T> = T extends boolean
+  ? never
+  : NonNullable<T>
+
 export interface OptionsConfig {
   javascript?: OptionsOverrides
 

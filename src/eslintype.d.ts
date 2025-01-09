@@ -1509,6 +1509,16 @@ export interface RuleOptions {
    */
   'unicode-bom'?: Linter.RuleEntry<UnicodeBom>
   /**
+   * Disallow unused variables
+   * @see https://github.com/sweepline/eslint-plugin-unused-imports/blob/master/docs/rules/no-unused-imports.md
+   */
+  'unused-imports/no-unused-imports'?: Linter.RuleEntry<UnusedImportsNoUnusedImports>
+  /**
+   * Disallow unused variables
+   * @see https://github.com/sweepline/eslint-plugin-unused-imports/blob/master/docs/rules/no-unused-vars.md
+   */
+  'unused-imports/no-unused-vars'?: Linter.RuleEntry<UnusedImportsNoUnusedVars>
+  /**
    * Require calls to `isNaN()` when checking for `NaN`
    * @see https://eslint.org/docs/latest/rules/use-isnan
    */
@@ -2976,6 +2986,52 @@ type TemplateCurlySpacing = []|[("always" | "never")]
 type TemplateTagSpacing = []|[("always" | "never")]
 // ----- unicode-bom -----
 type UnicodeBom = []|[("always" | "never")]
+// ----- unused-imports/no-unused-imports -----
+type UnusedImportsNoUnusedImports = []|[(("all" | "local") | {
+  
+  args?: ("all" | "after-used" | "none")
+  
+  argsIgnorePattern?: string
+  
+  caughtErrors?: ("all" | "none")
+  
+  caughtErrorsIgnorePattern?: string
+  
+  destructuredArrayIgnorePattern?: string
+  
+  ignoreClassWithStaticInitBlock?: boolean
+  
+  ignoreRestSiblings?: boolean
+  
+  reportUsedIgnorePattern?: boolean
+  
+  vars?: ("all" | "local")
+  
+  varsIgnorePattern?: string
+})]
+// ----- unused-imports/no-unused-vars -----
+type UnusedImportsNoUnusedVars = []|[(("all" | "local") | {
+  
+  args?: ("all" | "after-used" | "none")
+  
+  argsIgnorePattern?: string
+  
+  caughtErrors?: ("all" | "none")
+  
+  caughtErrorsIgnorePattern?: string
+  
+  destructuredArrayIgnorePattern?: string
+  
+  ignoreClassWithStaticInitBlock?: boolean
+  
+  ignoreRestSiblings?: boolean
+  
+  reportUsedIgnorePattern?: boolean
+  
+  vars?: ("all" | "local")
+  
+  varsIgnorePattern?: string
+})]
 // ----- use-isnan -----
 type UseIsnan = []|[{
   enforceForSwitchCase?: boolean
@@ -3000,4 +3056,4 @@ type Yoda = []|[("always" | "never")]|[("always" | "never"), {
   onlyEquality?: boolean
 }]
 // Names of all the configs
-export type ConfigNames = ''
+export type ConfigNames = 'sj-distributor/javascript/setup' | 'sj-distributor/javascript/rules'
