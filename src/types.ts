@@ -6,12 +6,12 @@ export type Awaitable<T> = T | Promise<T>
 
 export type Rules = RuleOptions
 
-export type TypedFlatConfigItem = Omit<Linter.Config<Linter.RulesRecord & Rules>, 'plugins'> & {
+export type EslintFlatConfigItem = Omit<Linter.Config<Linter.RulesRecord & Rules>, 'plugins'> & {
   plugins?:Record<string, any>
 }
 
 export interface OptionsOverrides {
-  overrides?: TypedFlatConfigItem['rules']
+  overrides?: EslintFlatConfigItem['rules']
 }
 
 export interface OptionsTypeScriptWithTypes {
@@ -24,7 +24,7 @@ export interface OptionsTypeScriptWithTypes {
   /**
    * Override type aware rules.
    */
-  overridesTypeAware?: TypedFlatConfigItem['rules']
+  overridesTypeAware?: EslintFlatConfigItem['rules']
 }
 
 export interface OptionsTypeScriptParserOptions {
@@ -60,6 +60,6 @@ export interface OptionsConfig {
   typescript?: boolean | OptionsTypescript
 
   overrides?: {
-    javascript?: TypedFlatConfigItem['rules']
+    javascript?: EslintFlatConfigItem['rules']
   }
 }

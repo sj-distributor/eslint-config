@@ -1,18 +1,18 @@
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
-import type { Awaitable, OptionsConfig, TypedFlatConfigItem } from './types'
+import type { Awaitable, OptionsConfig, EslintFlatConfigItem } from './types'
 import type { ConfigNames } from './eslintype';
 import { javascript } from './configs/javascript';
 import { getOverrides } from './utils';
 
-export const sjAvenger = (
-  options: OptionsConfig & Omit<TypedFlatConfigItem, 'files'> = {},
+export const avenger = (
+  options: OptionsConfig & Omit<EslintFlatConfigItem, 'files'> = {},
   ...customCongis:any
-): FlatConfigComposer<TypedFlatConfigItem, ConfigNames> => {
+): FlatConfigComposer<EslintFlatConfigItem, ConfigNames> => {
   const {
     typescript
   } = options;
 
-  const configs: Awaitable<TypedFlatConfigItem[]>[] = []
+  const configs: Awaitable<EslintFlatConfigItem[]>[] = []
 
   // Configurations enabled by default
   configs.push(
@@ -21,7 +21,7 @@ export const sjAvenger = (
     })
   )
 
-  let flatConfigs = new FlatConfigComposer<TypedFlatConfigItem, ConfigNames>()
+  let flatConfigs = new FlatConfigComposer<EslintFlatConfigItem, ConfigNames>()
 
   flatConfigs = flatConfigs.append(
     ...configs,

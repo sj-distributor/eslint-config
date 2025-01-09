@@ -17,9 +17,9 @@ pnpm install -D eslint @sj-distributor/eslint-config
 
 ```js
 // eslint.config.mjs
-import { sjAvenger } from '@sj-distributor/eslint-config';
+import { avenger } from '@sj-distributor/eslint-config';
 
-export default sjAvenger();
+export default avenger();
 ```
 
 ## License

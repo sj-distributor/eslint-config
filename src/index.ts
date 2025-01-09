@@ -1,7 +1,7 @@
-import { sjAvenger } from './main';
+import { avenger } from './main';
 
 export * from './main'
 export * from './configs'
 export * from "./utils";
 
-export default sjAvenger;
+export default avenger;

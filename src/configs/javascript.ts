@@ -1,10 +1,10 @@
 import globals from 'globals';
-import type { OptionsOverrides, TypedFlatConfigItem } from 'src/types';
+import type { OptionsOverrides, EslintFlatConfigItem } from 'src/types';
 import { default as unusedImportsPlugin } from 'eslint-plugin-unused-imports'
 
 export const javascript = async (
   { overrides }: OptionsOverrides = {}
-): Promise<TypedFlatConfigItem[]> => {
+): Promise<EslintFlatConfigItem[]> => {
   return [
     {
       name: 'sj-distributor/javascript/setup',

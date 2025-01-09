@@ -1,3 +1,3 @@
-import { sjAvenger } from './src';
+import { avenger } from './src';
 
-export default sjAvenger();
+export default avenger();

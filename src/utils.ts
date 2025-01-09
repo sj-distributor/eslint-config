@@ -1,11 +1,11 @@
 import type { Linter } from 'eslint'
 import type { RuleOptions } from './eslintype'
-import type { Awaitable, OptionsConfig, ResolvedOptions, TypedFlatConfigItem } from './types'
+import type { Awaitable, OptionsConfig, ResolvedOptions, EslintFlatConfigItem } from './types'
 
 /**
  * Merges and flattens multiple ESLint configs into a single array.
  */
-export async function mergeFlatConfigs(...configs: Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[]>[]): Promise<TypedFlatConfigItem[]> {
+export async function mergeFlatConfigs(...configs: Awaitable<EslintFlatConfigItem | EslintFlatConfigItem[]>[]): Promise<EslintFlatConfigItem[]> {
   const resolved = await Promise.all(configs)
   return resolved.flat()
 }
