@@ -20,7 +20,8 @@
     "lint:fix": "eslint --fix .",
     "dev": "npx @eslint/config-inspector --config eslint.config.ts",
     "eslint:typegen": "tsx eslint-typegen/eslint-typegen.ts",
-    "release": "bumpp && pnpm publish"
+    "release": "bumpp && pnpm publish",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [
     "eslint",
