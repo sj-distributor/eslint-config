@@ -12,13 +12,12 @@ export const avenger = (
 ): FlatConfigComposer<EslintFlatConfigItem, ConfigNames> => {
   const {
     typescript: enableTypeScript = isPackageExists('typescript'),
+    stylistic: enableStylistic = true,
   } = options;
 
-  const stylisticOptions = options.stylistic === false
-    ? false
-    : typeof options.stylistic === 'object'
-      ? options.stylistic
-      : {};
+  const stylisticOptions = typeof enableStylistic === 'object'
+    ? enableStylistic
+    : {};
 
   const configs: Awaitable<EslintFlatConfigItem[]>[] = [];
 
