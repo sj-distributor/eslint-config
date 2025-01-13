@@ -1,9 +1,9 @@
 import globals from 'globals';
 import type { IOptionsOverrides, EslintFlatConfigItem } from 'src/types';
-import { default as unusedImportsPlugin } from 'eslint-plugin-unused-imports'
+import { default as unusedImportsPlugin } from 'eslint-plugin-unused-imports';
 
 export const javascript = async (
-  { overrides = {} }: IOptionsOverrides = {}
+  { overrides = {} }: IOptionsOverrides = {},
 ): Promise<EslintFlatConfigItem[]> => {
   return [
     {
@@ -211,18 +211,18 @@ export const javascript = async (
         // 禁止使用特定的全局变量（如 global 和 self），推荐使用 globalThis
         'no-restricted-globals': [
           'error',
-            { message: 'Use `globalThis` instead.', name: 'global' },
-            { message: 'Use `globalThis` instead.', name: 'self' },
+          { message: 'Use `globalThis` instead.', name: 'global' },
+          { message: 'Use `globalThis` instead.', name: 'self' },
         ],
 
         // 禁止使用特定的对象属性（如 __proto__、__defineGetter__）
         'no-restricted-properties': [
           'error',
-            { message: 'Use `Object.getPrototypeOf` or `Object.setPrototypeOf` instead.', property: '__proto__' },
-            { message: 'Use `Object.defineProperty` instead.', property: '__defineGetter__' },
-            { message: 'Use `Object.defineProperty` instead.', property: '__defineSetter__' },
-            { message: 'Use `Object.getOwnPropertyDescriptor` instead.', property: '__lookupGetter__' },
-            { message: 'Use `Object.getOwnPropertyDescriptor` instead.', property: '__lookupSetter__' },
+          { message: 'Use `Object.getPrototypeOf` or `Object.setPrototypeOf` instead.', property: '__proto__' },
+          { message: 'Use `Object.defineProperty` instead.', property: '__defineGetter__' },
+          { message: 'Use `Object.defineProperty` instead.', property: '__defineSetter__' },
+          { message: 'Use `Object.getOwnPropertyDescriptor` instead.', property: '__lookupGetter__' },
+          { message: 'Use `Object.getOwnPropertyDescriptor` instead.', property: '__lookupSetter__' },
         ],
 
         // 禁止使用特定的语法（如 const enum 和 export =）
@@ -330,8 +330,8 @@ export const javascript = async (
 
         // 强制使用对象属性简写（如 { x } 而不是 { x: x }）
         'object-shorthand': [
-        'error',
-        'always',
+          'error',
+          'always',
           {
             avoidQuotes: true,
             ignoreConstructors: false,
@@ -343,7 +343,7 @@ export const javascript = async (
 
         // 推荐使用箭头函数作为回调函数
         'prefer-arrow-callback': [
-        'error',
+          'error',
           {
             allowNamedFunctions: false,
             allowUnboundThis: true,
@@ -352,7 +352,7 @@ export const javascript = async (
 
         // 推荐使用 const 声明不会重新赋值的变量
         'prefer-const': [
-        'error',
+          'error',
           {
             destructuring: 'all',
             ignoreReadBeforeAssign: true,
@@ -388,7 +388,7 @@ export const javascript = async (
 
         // 检查未使用的变量
         'unused-imports/no-unused-vars': [
-        'error',
+          'error',
           {
             args: 'after-used',
             argsIgnorePattern: '^_',
@@ -410,8 +410,8 @@ export const javascript = async (
         // 禁止 Yoda 条件（如 if (42 === value)）
         'yoda': ['error', 'never'],
 
-        ...overrides
-      }
-    }
-  ]
-}
+        ...overrides,
+      },
+    },
+  ];
+};
