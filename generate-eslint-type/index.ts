@@ -1,5 +1,5 @@
 import fs from 'node:fs/promises'
-import { mergeFlatConfigs } from '../src'
+import { mergeFlatConfigs, typescript } from '../src'
 import { builtinRules } from 'eslint/use-at-your-own-risk'
 import { flatConfigsToRulesDTS } from 'eslint-typegen/core'
 import { javascript } from 'src/configs/javascript'
@@ -12,7 +12,8 @@ const configs = await mergeFlatConfigs(
       }
     }
   },
-  javascript()
+  javascript(),
+  typescript()
 )
 
 const configNames = configs.map(i => i.name).filter(Boolean) as string[]

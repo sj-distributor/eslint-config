@@ -10,11 +10,16 @@ export type EslintFlatConfigItem = Omit<Linter.Config<Linter.RulesRecord & Rules
   plugins?:Record<string, any>
 }
 
-export interface OptionsOverrides {
+
+export interface IOptionsFiles {
+  files?: string[]
+}
+
+export interface IOptionsOverrides {
   overrides?: EslintFlatConfigItem['rules']
 }
 
-export interface OptionsTypeScriptWithTypes {
+export interface IOptionsTypeScriptWithTypes {
   /**
    * When this options is provided, type aware rules will be enabled.
    * @see https://typescript-eslint.io/linting/typed-linting/
@@ -27,7 +32,7 @@ export interface OptionsTypeScriptWithTypes {
   overridesTypeAware?: EslintFlatConfigItem['rules']
 }
 
-export interface OptionsTypeScriptParserOptions {
+export interface IOptionsTypeScriptParserOptions {
   /**
    * Additional parser options for TypeScript.
    */
@@ -47,15 +52,15 @@ export interface OptionsTypeScriptParserOptions {
 }
 
 export type OptionsTypescript =
-  (OptionsTypeScriptWithTypes & OptionsOverrides)
-  | (OptionsTypeScriptParserOptions & OptionsOverrides)
+  (IOptionsTypeScriptWithTypes & IOptionsOverrides)
+  | (IOptionsTypeScriptParserOptions & IOptionsOverrides)
 
 export type ResolvedOptions<T> = T extends boolean
   ? never
   : NonNullable<T>
 
-export interface OptionsConfig {
-  javascript?: OptionsOverrides
+export interface IOptionsConfig {
+  javascript?: IOptionsOverrides
 
   typescript?: boolean | OptionsTypescript
 

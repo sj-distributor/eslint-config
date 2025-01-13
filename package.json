@@ -19,7 +19,8 @@
     "lint": "eslint --flag unstable_ts_config .",
     "lint:fix": "eslint --fix .",
     "dev": "npx @eslint/config-inspector --config eslint.config.ts",
-    "generate:eslint:type": "esno generate-eslint-type/index.ts"
+    "generate:eslint:type": "tsx generate-eslint-type/index.ts",
+    "release": "bumpp && pnpm publish"
   },
   "keywords": [
     "eslint",
@@ -29,16 +30,16 @@
   "license": "MIT",
   "type": "module",
   "devDependencies": {
+    "@sj-distributor/eslint-config": "workspace:*",
     "@types/node": "^22.10.5",
-    "eslint": "^9.17.0",
+    "bumpp": "^9.10.0",
+    "eslint": "^9.18.0",
     "eslint-plugin-unused-imports": "^4.1.4",
-    "eslint-typegen": "^0.3.2",
-    "esno": "^4.8.0",
+    "eslint-typegen": "^1.0.0",
     "jiti": "^2.4.2",
     "tsup": "^8.3.5",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.3",
-    "@sj-distributor/eslint-config": "workspace:*"
+    "typescript": "^5.7.3"
   },
   "peerDependencies": {
     "eslint": "^9.17.0"
@@ -46,8 +47,9 @@
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^8.19.1",
     "@typescript-eslint/parser": "^8.19.1",
-    "eslint-flat-config-utils": "^0.4.0",
-    "globals": "^15.14.0"
+    "eslint-flat-config-utils": "^1.0.0",
+    "globals": "^15.14.0",
+    "local-pkg": "^1.0.0"
   },
   "resolutions": {
     "tsx": "^4.19.2",
