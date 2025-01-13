@@ -64,14 +64,30 @@ export interface IStylisticConfig
 }
 
 export interface IOptionsConfig {
+  /**
+   * @default true
+   */
   javascript?: IOptionsOverrides;
 
+  /**
+   * @default true
+   */
   typescript?: boolean | OptionsTypescript;
 
+  /**
+   * @default true
+   */
   stylistic?: boolean | (IStylisticConfig & IOptionsOverrides);
+
+  /**
+   * @default false
+   */
+  react?: boolean | IOptionsOverrides;
 
   overrides?: {
     javascript?: EslintFlatConfigItem['rules'];
     typescript?: EslintFlatConfigItem['rules'];
+    stylistic?: EslintFlatConfigItem['rules'];
+    react?: EslintFlatConfigItem['rules'];
   };
 }

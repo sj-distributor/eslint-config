@@ -4,7 +4,7 @@ import type { ConfigNames } from './eslintype';
 import { javascript } from './configs/javascript';
 import { getOverrides, resolveSubOptions } from './utils';
 import { isPackageExists } from 'local-pkg';
-import { stylistic, typescript } from './configs';
+import { react, stylistic, typescript } from './configs';
 
 export const avenger = (
   options: IOptionsConfig & Omit<EslintFlatConfigItem, 'files'> = {},
@@ -13,6 +13,7 @@ export const avenger = (
   const {
     typescript: enableTypeScript = isPackageExists('typescript'),
     stylistic: enableStylistic = true,
+    react: enableReact = false,
   } = options;
 
   const stylisticOptions = typeof enableStylistic === 'object'
@@ -22,6 +23,7 @@ export const avenger = (
   const configs: Awaitable<EslintFlatConfigItem[]>[] = [];
 
   const typescriptOptions = resolveSubOptions(options, 'typescript');
+  const tsconfigPath = 'tsconfigPath' in typescriptOptions ? typescriptOptions.tsconfigPath : undefined;
 
   // Configurations enabled by default
   configs.push(
@@ -43,6 +45,14 @@ export const avenger = (
     configs.push(stylistic({
       ...stylisticOptions,
       overrides: getOverrides(options, 'stylistic'),
+    }));
+  }
+
+  if (enableReact) {
+    configs.push(react({
+      ...typescriptOptions,
+      overrides: getOverrides(options, 'react'),
+      tsconfigPath,
     }));
   }
 
