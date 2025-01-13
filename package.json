@@ -15,11 +15,11 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "pnpm generate:eslint:type && tsup",
+    "build": "pnpm eslint:typegen && tsup",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "dev": "npx @eslint/config-inspector --config eslint.config.ts",
-    "generate:eslint:type": "tsx generate-eslint-type/index.ts",
+    "eslint:typegen": "tsx eslint-typegen/index.ts",
     "release": "bumpp && pnpm publish"
   },
   "keywords": [
