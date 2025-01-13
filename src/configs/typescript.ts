@@ -2,17 +2,17 @@ import type { EslintFlatConfigItem, IOptionsFiles, IOptionsOverrides, IOptionsTy
 import { loadModule } from '../utils';
 
 export const typescript = async (
-  options: IOptionsFiles & IOptionsOverrides & IOptionsTypeScriptWithTypes & IOptionsTypeScriptParserOptions = {}
+  options: IOptionsFiles & IOptionsOverrides & IOptionsTypeScriptWithTypes & IOptionsTypeScriptParserOptions = {},
 ): Promise<EslintFlatConfigItem[]> => {
   const {
     files = [
       '**/*.?([cm])ts',
-    '**/*.?([cm])tsx'
+      '**/*.?([cm])tsx',
     ],
     overrides = {},
     parserOptions = {},
     overridesTypeAware = {},
-    tsconfigPath
+    tsconfigPath,
   } = options;
 
   const isTypeAware = !!tsconfigPath;
@@ -23,8 +23,7 @@ export const typescript = async (
     loadModule(import('@typescript-eslint/eslint-plugin')),
   ] as const);
 
-
-  const makeParser = (typeAware: boolean): EslintFlatConfigItem  => {
+  const makeParser = (typeAware: boolean): EslintFlatConfigItem => {
     return {
       files,
       languageOptions: {
@@ -45,15 +44,15 @@ export const typescript = async (
         },
       },
       name: `sj-distributor/typescript/${typeAware ? 'type-aware-parser' : 'parser'}`,
-    }
-  }
+    };
+  };
 
   return [
     {
       name: 'sj-distributor/typescript/setup',
       plugins: {
-        '@typescript-eslint': tsPlugin
-      }
+        '@typescript-eslint': tsPlugin,
+      },
     },
     ...(isTypeAware
       ? [makeParser(false), makeParser(true)]
@@ -72,16 +71,16 @@ export const typescript = async (
         // --- 关闭 ESLint 原生规则，由 TypeScript 规则替代 ---
 
         // 禁止重复的类成员
-        'no-dupe-class-members': 'off', 
+        'no-dupe-class-members': 'off',
 
         // 禁止重复声明变量
-        'no-redeclare': 'off', 
+        'no-redeclare': 'off',
 
         // 禁止在定义前使用
-        'no-use-before-define': 'off', 
+        'no-use-before-define': 'off',
 
         // 禁止不必要的构造函数
-        'no-useless-constructor': 'off', 
+        'no-useless-constructor': 'off',
 
         // --- TypeScript 规则 ---
 
@@ -103,16 +102,16 @@ export const typescript = async (
         '@typescript-eslint/no-dupe-class-members': 'error',
 
         // 允许动态删除属性
-        '@typescript-eslint/no-dynamic-delete': 'off', 
+        '@typescript-eslint/no-dynamic-delete': 'off',
 
         // 禁止空对象类型，但允许接口
         '@typescript-eslint/no-empty-object-type': ['error', { allowInterfaces: 'always' }],
 
         // 允许使用 any 类型
-        '@typescript-eslint/no-explicit-any': 'off', 
+        '@typescript-eslint/no-explicit-any': 'off',
 
         // 允许不必要的类
-        '@typescript-eslint/no-extraneous-class': 'off', 
+        '@typescript-eslint/no-extraneous-class': 'off',
 
         // 禁止导入类型时的副作用
         '@typescript-eslint/no-import-type-side-effects': 'error',
@@ -153,8 +152,8 @@ export const typescript = async (
         // 允许不一致的函数签名
         '@typescript-eslint/unified-signatures': 'off',
 
-        ...overrides
-      }
+        ...overrides,
+      },
     },
     ...isTypeAware
       ? [{
@@ -165,7 +164,7 @@ export const typescript = async (
               // 关闭 ESLint 原生规则，由 TypeScript 规则替代
 
               // 禁止使用点号访问属性
-              'dot-notation': 'off', 
+              'dot-notation': 'off',
 
               // 禁止隐式的 eval 调用
               'no-implied-eval': 'off',
@@ -221,7 +220,7 @@ export const typescript = async (
               '@typescript-eslint/return-await': ['error', 'in-try-catch'],
 
               // 强制严格的布尔表达式
-              '@typescript-eslint/strict-boolean-expressions': ['error', { 
+              '@typescript-eslint/strict-boolean-expressions': ['error', {
                 allowNullableBoolean: true, // 允许可空的布尔值
                 allowNullableObject: true, // 允许可空的对象
               }],
@@ -231,10 +230,10 @@ export const typescript = async (
 
               // 禁止未绑定的方法
               '@typescript-eslint/unbound-method': 'error',
-            } as EslintFlatConfigItem['rules']
+            } as EslintFlatConfigItem['rules'],
           },
-        ...overridesTypeAware
-      }]
-      :[],
-  ]
-}
+          ...overridesTypeAware,
+        }]
+      : [],
+  ];
+};

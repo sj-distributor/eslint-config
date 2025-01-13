@@ -9,10 +9,6 @@
     "source.organizeImports": "never"
   },
 
-  // Specify ESLint to use the Node.js runtime
-  "eslint.options": {
-    "flags": ["unstable_ts_config"]
-  },
   "eslint.runtime": "node",
 
   /**
