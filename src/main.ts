@@ -14,6 +14,7 @@ export const avenger = (
     typescript: enableTypeScript = isPackageExists('typescript'),
     stylistic: enableStylistic = true,
     react: enableReact = false,
+    reactnative: enableReactNative = false,
   } = options;
 
   const stylisticOptions = typeof enableStylistic === 'object'
@@ -53,6 +54,7 @@ export const avenger = (
       ...typescriptOptions,
       overrides: getOverrides(options, 'react'),
       tsconfigPath,
+      reactnative: !!enableReactNative,
     }));
   }
 
