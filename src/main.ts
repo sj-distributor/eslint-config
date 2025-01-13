@@ -1,25 +1,39 @@
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
-import type { Awaitable, OptionsConfig, EslintFlatConfigItem } from './types'
+import type { Awaitable, IOptionsConfig, EslintFlatConfigItem } from './types'
 import type { ConfigNames } from './eslintype';
 import { javascript } from './configs/javascript';
-import { getOverrides } from './utils';
+import { getOverrides, resolveSubOptions } from './utils';
+import { isPackageExists } from 'local-pkg';
+import { typescript } from './configs';
 
 export const avenger = (
-  options: OptionsConfig & Omit<EslintFlatConfigItem, 'files'> = {},
+  options: IOptionsConfig & Omit<EslintFlatConfigItem, 'files'> = {},
   ...customCongis:any
 ): FlatConfigComposer<EslintFlatConfigItem, ConfigNames> => {
   const {
-    typescript
+    typescript: enableTypeScript = isPackageExists('typescript'),
   } = options;
 
   const configs: Awaitable<EslintFlatConfigItem[]>[] = []
 
+
+  const typescriptOptions = resolveSubOptions(options, 'typescript')
+  
   // Configurations enabled by default
   configs.push(
     javascript({
       overrides:getOverrides(options, 'javascript')
     })
   )
+
+  if (enableTypeScript) {
+    configs.push(
+      typescript({
+        ...typescriptOptions,
+        overrides: getOverrides(options, 'typescript')
+      })
+    )
+  }
 
   let flatConfigs = new FlatConfigComposer<EslintFlatConfigItem, ConfigNames>()
 

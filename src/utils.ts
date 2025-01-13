@@ -1,28 +1,25 @@
 import type { Linter } from 'eslint'
 import type { RuleOptions } from './eslintype'
-import type { Awaitable, OptionsConfig, ResolvedOptions, EslintFlatConfigItem } from './types'
+import type { Awaitable, IOptionsConfig, ResolvedOptions, EslintFlatConfigItem } from './types'
 
-/**
- * Merges and flattens multiple ESLint configs into a single array.
- */
-export async function mergeFlatConfigs(...configs: Awaitable<EslintFlatConfigItem | EslintFlatConfigItem[]>[]): Promise<EslintFlatConfigItem[]> {
+export  const mergeFlatConfigs = async (...configs: Awaitable<EslintFlatConfigItem | EslintFlatConfigItem[]>[]): Promise<EslintFlatConfigItem[]> => {
   const resolved = await Promise.all(configs)
   return resolved.flat()
 }
 
-export function resolveSubOptions<K extends keyof OptionsConfig>(
-  options: OptionsConfig,
+export const resolveSubOptions = <K extends keyof IOptionsConfig>(
+  options: IOptionsConfig,
   key: K,
-): ResolvedOptions<OptionsConfig[K]> {
+): ResolvedOptions<IOptionsConfig[K]> => {
   return typeof options[key] === 'boolean'
     ? {} as any
     : options[key] || {}
 }
 
-export function getOverrides<K extends keyof OptionsConfig>(
-  options: OptionsConfig,
+export const getOverrides = <K extends keyof IOptionsConfig>(
+  options: IOptionsConfig,
   key: K,
-): Partial<Linter.RulesRecord & RuleOptions> {
+): Partial<Linter.RulesRecord & RuleOptions> => {
   const sub = resolveSubOptions(options, key)
   return {
     ...(options.overrides as any)?.[key],
@@ -30,4 +27,9 @@ export function getOverrides<K extends keyof OptionsConfig>(
       ? sub.overrides
       : {},
   }
+}
+
+export const loadModule = async <T>(m: Promise<T>): Promise<T extends { default: infer U } ? U : T> => {
+  const result = await m;
+  return (result as any).default || result;
 }

@@ -1,9 +1,9 @@
 import globals from 'globals';
-import type { OptionsOverrides, EslintFlatConfigItem } from 'src/types';
+import type { IOptionsOverrides, EslintFlatConfigItem } from 'src/types';
 import { default as unusedImportsPlugin } from 'eslint-plugin-unused-imports'
 
 export const javascript = async (
-  { overrides }: OptionsOverrides = {}
+  { overrides = {} }: IOptionsOverrides = {}
 ): Promise<EslintFlatConfigItem[]> => {
   return [
     {
