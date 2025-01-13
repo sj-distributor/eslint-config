@@ -80,5 +80,5 @@ dist
 .temp
 .history
 
-src/typegen.d.ts
+src/eslintype.d.ts
 .eslint-config-inspector
