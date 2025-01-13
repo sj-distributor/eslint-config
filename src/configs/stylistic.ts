@@ -42,13 +42,13 @@ export const stylistic = async (
       rules: {
         ...stylisticConfig.rules,
 
-        // '@stylistic/object-curly-spacing': ['error', 'always'], // bracketSpacing: true
-        // '@stylistic/jsx-closing-bracket-location': ['error', 'line-aligned'], // jsxBracketSameLine: true
-        // '@stylistic/quotes': ['error', 'single'], // singleQuote: true
-        // '@stylistic/comma-dangle': ['error', 'always-multiline'], // trailingComma: 'all'
-        // '@stylistic/arrow-parens': ['error', 'as-needed'], // arrowParens: 'avoid'
+        '@stylistic/object-curly-spacing': ['error', 'always'],
+        '@stylistic/jsx-closing-bracket-location': ['error', 'line-aligned'],
+        '@stylistic/quotes': ['error', 'single'],
+        '@stylistic/comma-dangle': ['error', 'always-multiline'],
+        '@stylistic/arrow-parens': ['error', 'as-needed'],
 
-        curly: ['error', 'all'],
+        'curly': ['error', 'all'],
 
         ...overrides,
       },
