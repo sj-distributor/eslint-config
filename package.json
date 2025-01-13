@@ -30,6 +30,7 @@
   "author": "Simon Feng",
   "license": "MIT",
   "type": "module",
+  "packageManager": "pnpm@10.0.0",
   "dependencies": {
     "@antfu/install-pkg": "^1.0.0",
     "@clack/prompts": "^0.9.1",
