@@ -2,21 +2,21 @@ import type { EslintFlatConfigItem, IOptionsOverrides, IStylisticConfig } from '
 import { loadModule } from '../utils';
 
 export const DEFAULT_CONFIG: IStylisticConfig = {
-  indent: 2,
   jsx: true,
-  quotes: 'single',
   semi: true,
+  indent: 2,
+  quotes: 'single',
 };
 
 export const stylistic = async (
   options: IStylisticConfig & IOptionsOverrides = {},
 ): Promise<EslintFlatConfigItem[]> => {
   const {
-    indent,
     jsx,
-    overrides = {},
-    quotes,
     semi,
+    quotes,
+    indent,
+    overrides = {},
   } = {
     ...DEFAULT_CONFIG,
     ...options,
