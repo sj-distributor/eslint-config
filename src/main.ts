@@ -4,7 +4,7 @@ import type { ConfigNames } from './eslintype';
 import { javascript } from './configs/javascript';
 import { getOverrides, resolveSubOptions } from './utils';
 import { isPackageExists } from 'local-pkg';
-import { react, stylistic, typescript } from './configs';
+import { ignores, react, stylistic, typescript } from './configs';
 
 export const avenger = (
   options: IOptionsConfig & Omit<EslintFlatConfigItem, 'files'> = {},
@@ -15,6 +15,7 @@ export const avenger = (
     stylistic: enableStylistic = true,
     react: enableReact = false,
     reactnative: enableReactNative = false,
+    ignores: customIgnoresConfig,
   } = options;
 
   const stylisticOptions = typeof enableStylistic === 'object'
@@ -28,6 +29,7 @@ export const avenger = (
 
   // Configurations enabled by default
   configs.push(
+    ignores(customIgnoresConfig),
     javascript({
       overrides: getOverrides(options, 'javascript'),
     }),

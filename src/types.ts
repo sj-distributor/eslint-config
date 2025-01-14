@@ -93,6 +93,8 @@ export interface IOptionsConfig {
    */
   reactnative?: boolean | IOptionsOverrides;
 
+  ignores?: string[];
+
   overrides?: {
     javascript?: EslintFlatConfigItem['rules'];
     typescript?: EslintFlatConfigItem['rules'];

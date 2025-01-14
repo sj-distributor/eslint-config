@@ -1,0 +1,83 @@
+import type { EslintFlatConfigItem } from 'src/types';
+
+const DEFAULT_IGNORES = [
+  '**/.parcel-cache',
+  '**/.eslintcache',
+  '**/.tsbuildinfo',
+  '**/test-results',
+  '**/playwright-report',
+  '**/jest-coverage',
+  '**/cypress/videos',
+  '**/cypress/screenshots',
+  '**/.vscode',
+  '**/.swc',
+  '**/.rpt2_cache',
+  '**/.pnpm-store',
+  '**/.yarn/cache',
+  '**/.yarn/unplugged',
+  '**/.yarn/install-state.gz',
+  '**/*.log',
+  '**/.env.local',
+  '**/.env.*.local',
+  '**/.DS_Store',
+  '**/Thumbs.db',
+  '**/.astro',
+  '**/.quasar',
+  '**/.sapper',
+  '**/.vuepress',
+  '**/.redwood',
+  '**/.git',
+  '**/.github',
+  '**/.husky',
+  '**/.trash',
+
+  '**/node_modules',
+  '**/dist',
+  '**/build',
+  '**/out',
+  '**/package-lock.json',
+  '**/yarn.lock',
+  '**/pnpm-lock.yaml',
+  '**/bun.lockb',
+
+  '**/output',
+  '**/coverage',
+  '**/temp',
+  '**/.temp',
+  '**/tmp',
+  '**/.tmp',
+  '**/.history',
+  '**/.vitepress/cache',
+  '**/.nuxt',
+  '**/.next',
+  '**/.svelte-kit',
+  '**/.vercel',
+  '**/.changeset',
+  '**/.idea',
+  '**/.cache',
+  '**/.output',
+  '**/.vite-inspect',
+  '**/.yarn',
+  '**/vite.config.*.timestamp-*',
+
+  '**/CHANGELOG*.md',
+  '**/*.min.*',
+  '**/LICENSE*',
+  '**/__snapshots__',
+  '**/auto-import?(s).d.ts',
+  '**/components.d.ts',
+];
+
+export const ignores = (
+  customIgnores: string[] = [],
+): EslintFlatConfigItem[] => {
+  return [
+    {
+      name: 'sj-distributor/ignores',
+      ignores: [
+        ...DEFAULT_IGNORES,
+        ...customIgnores,
+      ],
+    },
+  ];
+};
