@@ -1,8 +1,7 @@
 import fs from 'node:fs/promises';
-import { mergeFlatConfigs, stylistic, typescript } from '../src';
+import { javascript, mergeFlatConfigs, react, stylistic, typescript, ignores } from '../src';
 import { builtinRules } from 'eslint/use-at-your-own-risk';
 import { flatConfigsToRulesDTS } from 'eslint-typegen/core';
-import { javascript } from 'src/configs/javascript';
 
 async function generateEslintType() {
   const configs = await mergeFlatConfigs(
@@ -16,6 +15,8 @@ async function generateEslintType() {
     javascript(),
     typescript(),
     stylistic(),
+    react(),
+    ignores(),
   );
 
   const configNames = configs.map(i => i.name).filter(Boolean) as string[];

@@ -15,6 +15,10 @@ export interface IOptionsFiles {
   files?: string[];
 }
 
+export interface IOptionsReactNative {
+  reactnative?: boolean;
+}
+
 export interface IOptionsOverrides {
   overrides?: EslintFlatConfigItem['rules'];
 }
@@ -64,14 +68,38 @@ export interface IStylisticConfig
 }
 
 export interface IOptionsConfig {
+  /**
+   * @default true
+   */
   javascript?: IOptionsOverrides;
 
+  /**
+   * @default true
+   */
   typescript?: boolean | OptionsTypescript;
 
+  /**
+   * @default true
+   */
   stylistic?: boolean | (IStylisticConfig & IOptionsOverrides);
+
+  /**
+   * @default false
+   */
+  react?: boolean | IOptionsOverrides;
+
+  /**
+   * @default false
+   */
+  reactnative?: boolean | IOptionsOverrides;
+
+  ignores?: string[];
 
   overrides?: {
     javascript?: EslintFlatConfigItem['rules'];
     typescript?: EslintFlatConfigItem['rules'];
+    stylistic?: EslintFlatConfigItem['rules'];
+    react?: EslintFlatConfigItem['rules'];
+    reactnative?: EslintFlatConfigItem['rules'];
   };
 }
