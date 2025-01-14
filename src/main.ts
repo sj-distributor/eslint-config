@@ -5,10 +5,11 @@ import { javascript } from './configs/javascript';
 import { getOverrides, resolveSubOptions } from './utils';
 import { isPackageExists } from 'local-pkg';
 import { ignores, react, stylistic, typescript } from './configs';
+import type { Linter } from 'eslint';
 
 export const avenger = (
   options: IOptionsConfig & Omit<EslintFlatConfigItem, 'files'> = {},
-  ...customCongis: any
+  ...customCongis: Awaitable<EslintFlatConfigItem | EslintFlatConfigItem[] | FlatConfigComposer<any, any> | Linter.Config[]>[]
 ): FlatConfigComposer<EslintFlatConfigItem, ConfigNames> => {
   const {
     typescript: enableTypeScript = isPackageExists('typescript'),
