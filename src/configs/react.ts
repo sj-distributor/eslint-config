@@ -48,37 +48,37 @@ export const react = async (
 
   const domSpecificRules: EslintFlatConfigItem['rules'] = {
     // 禁止在 void DOM 元素中使用 children
-    '@eslint-react/domno-children-in-void-dom-elements': 'warn',
+    '@eslint-react/dom/no-children-in-void-dom-elements': 'warn',
 
     // 避免使用 dangerouslySetInnerHTML
-    '@eslint-react/domno-dangerously-set-innerhtml': 'warn',
+    '@eslint-react/dom/no-dangerously-set-innerhtml': 'warn',
 
     // 禁止同时使用 dangerouslySetInnerHTML 和 children
-    '@eslint-react/domno-dangerously-set-innerhtml-with-children': 'error',
+    '@eslint-react/dom/no-dangerously-set-innerhtml-with-children': 'error',
 
     // 禁止使用 findDOMNode
-    '@eslint-react/domno-find-dom-node': 'error',
+    '@eslint-react/dom/no-find-dom-node': 'error',
 
     // 确保按钮元素有 type 属性
-    '@eslint-react/domno-missing-button-type': 'warn',
+    '@eslint-react/dom/no-missing-button-type': 'warn',
 
     // 确保 iframe 元素有 sandbox 属性
-    '@eslint-react/domno-missing-iframe-sandbox': 'warn',
+    '@eslint-react/dom/no-missing-iframe-sandbox': 'warn',
 
     // 禁止使用命名空间组件
-    '@eslint-react/domno-namespace': 'error',
+    '@eslint-react/dom/no-namespace': 'error',
 
     // 禁止使用 ReactDOM.render 的返回值
-    '@eslint-react/domno-render-return-value': 'error',
+    '@eslint-react/dom/no-render-return-value': 'error',
 
     // 避免使用 javascript: URL
-    '@eslint-react/domno-script-url': 'warn',
+    '@eslint-react/dom/no-script-url': 'warn',
 
     // 避免使用不安全的 iframe sandbox 属性
-    '@eslint-react/domno-unsafe-iframe-sandbox': 'warn',
+    '@eslint-react/dom/no-unsafe-iframe-sandbox': 'warn',
 
     // 避免使用不安全的 target="_blank"
-    '@eslint-react/domno-unsafe-target-blank': 'warn',
+    '@eslint-react/dom/no-unsafe-target-blank': 'warn',
   };
 
   return [
