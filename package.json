@@ -1,6 +1,6 @@
 {
   "name": "@sj-distributor/eslint-config",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "SJ Distributor Avenger Team ESLint Config",
   "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
