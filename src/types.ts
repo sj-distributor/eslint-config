@@ -1,7 +1,8 @@
-import type { Linter } from 'eslint';
-import type { RuleOptions } from './eslintype';
-import type { ParserOptions } from '@typescript-eslint/parser';
 import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
+import type { ParserOptions } from '@typescript-eslint/parser';
+import type { Linter } from 'eslint';
+
+import type { RuleOptions } from './eslintype';
 
 export type Awaitable<T> = T | Promise<T>;
 
@@ -62,6 +63,10 @@ export type OptionsTypescript =
 export type ResolvedOptions<T> = T extends boolean
   ? never
   : NonNullable<T>;
+
+export interface IOptionsStylistic {
+  stylistic?: boolean | IStylisticConfig;
+}
 
 export interface IStylisticConfig
   extends Pick<StylisticCustomizeOptions, 'indent' | 'quotes' | 'jsx' | 'semi'> {

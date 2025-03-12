@@ -1,8 +1,10 @@
+import { fileURLToPath } from 'node:url';
+
 import type { Linter } from 'eslint';
+import { isPackageExists } from 'local-pkg';
+
 import type { RuleOptions } from './eslintype';
 import type { Awaitable, IOptionsConfig, ResolvedOptions, EslintFlatConfigItem } from './types';
-import { isPackageExists } from 'local-pkg';
-import { fileURLToPath } from 'node:url';
 
 /**
  * 合并多个 ESLint 扁平配置
