@@ -1,4 +1,5 @@
 import type { EslintFlatConfigItem, IOptionsOverrides, IStylisticConfig } from 'src/types';
+
 import { loadModule } from '../utils';
 
 export const DEFAULT_CONFIG: IStylisticConfig = {

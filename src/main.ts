@@ -1,11 +1,12 @@
-import { FlatConfigComposer } from 'eslint-flat-config-utils';
-import type { Awaitable, IOptionsConfig, EslintFlatConfigItem } from './types';
-import type { ConfigNames } from './eslintype';
-import { javascript } from './configs/javascript';
-import { getOverrides, resolveSubOptions } from './utils';
-import { isPackageExists } from 'local-pkg';
-import { ignores, react, stylistic, typescript } from './configs';
 import type { Linter } from 'eslint';
+import { FlatConfigComposer } from 'eslint-flat-config-utils';
+import { isPackageExists } from 'local-pkg';
+
+import { ignores, importX, react, stylistic, typescript } from './configs';
+import { javascript } from './configs/javascript';
+import type { ConfigNames } from './eslintype';
+import type { Awaitable, IOptionsConfig, EslintFlatConfigItem } from './types';
+import { getOverrides, resolveSubOptions } from './utils';
 
 export const avenger = (
   options: IOptionsConfig & Omit<EslintFlatConfigItem, 'files'> = {},
@@ -19,9 +20,11 @@ export const avenger = (
     ignores: customIgnoresConfig,
   } = options;
 
-  const stylisticOptions = typeof enableStylistic === 'object'
-    ? enableStylistic
-    : {};
+  const stylisticOptions = options.stylistic === false
+    ? false
+    : typeof enableStylistic === 'object'
+      ? enableStylistic
+      : {};
 
   const configs: Awaitable<EslintFlatConfigItem[]>[] = [];
 
@@ -34,6 +37,7 @@ export const avenger = (
     javascript({
       overrides: getOverrides(options, 'javascript'),
     }),
+    importX(),
   );
 
   if (enableTypeScript) {
