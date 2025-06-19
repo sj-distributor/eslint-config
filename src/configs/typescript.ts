@@ -88,8 +88,8 @@ export const typescript = async (
         // 禁止使用 @ts-ignore，但允许 @ts-expect-error 并需要描述
         '@typescript-eslint/ban-ts-comment': ['error', { 'ts-expect-error': 'allow-with-description' }],
 
-        // 强制使用 interface 定义类型
-        '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
+        // 禁止强制指定定义类型
+        '@typescript-eslint/consistent-type-definitions': 'off',
 
         '@typescript-eslint/consistent-type-imports': ['error', {
           disallowTypeAnnotations: false, // 允许类型注解
