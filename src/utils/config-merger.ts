@@ -22,7 +22,7 @@ export const resolveSubOptions = <K extends keyof IOptionsConfig>(
 ): ResolvedOptions<IOptionsConfig[K]> => {
   const value = options[key];
 
-  return typeof value === 'boolean' ? {} as any : value || {};
+  return typeof value === 'boolean' ? {} as any : value || {} as any;
 };
 
 /**

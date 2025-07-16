@@ -25,7 +25,6 @@ export const stylistic = async (
   const stylisticPlugin = await loadModule(import('@stylistic/eslint-plugin'));
 
   const stylisticConfig = stylisticPlugin.configs.customize({
-    flat: true,
     indent,
     jsx,
     pluginName: '@stylistic',
@@ -47,6 +46,8 @@ export const stylistic = async (
         '@stylistic/quotes': ['error', 'single'],
         '@stylistic/comma-dangle': ['error', 'always-multiline'],
         '@stylistic/arrow-parens': ['error', 'as-needed'],
+        '@stylistic/generator-star-spacing': ['error', { before: false, after: true }],
+        '@stylistic/yield-star-spacing': ['error', { before: false, after: true }],
 
         'curly': ['error', 'all'],
 
