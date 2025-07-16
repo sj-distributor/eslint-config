@@ -56,9 +56,9 @@ export interface IOptionsTypeScriptParserOptions {
   ignoresTypeAware?: string[];
 }
 
-export type OptionsTypescript =
-  (IOptionsTypeScriptWithTypes & IOptionsOverrides)
-  | (IOptionsTypeScriptParserOptions & IOptionsOverrides);
+export type OptionsTypescript
+  = (IOptionsTypeScriptWithTypes & IOptionsOverrides)
+    | (IOptionsTypeScriptParserOptions & IOptionsOverrides);
 
 export type ResolvedOptions<T> = T extends boolean
   ? never
