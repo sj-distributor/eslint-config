@@ -3,6 +3,10 @@
 [![npm version](https://img.shields.io/npm/v/@sj-distributor/eslint-config.svg)](https://www.npmjs.com/package/@sj-distributor/eslint-config)
 [![license](https://img.shields.io/npm/l/@sj-distributor/eslint-config.svg)](https://github.com/sj-distributor/eslint-config/blob/main/LICENSE)
 
+---
+
+[![中文文档](https://img.shields.io/badge/中文文档-点击查看-red.svg)](https://github.com/sj-distributor/eslint-config/blob/master/README_CN.md)
+
 🚀 **SJ Distributor Avenger Team ESLint Config** - A modern, opinionated ESLint configuration for JavaScript, TypeScript, and React projects.
 
 > [!WARNING]
@@ -159,24 +163,6 @@ export default avenger(
   // Add more custom configs...
 );
 ```
-
-## 📋 Included Configurations
-
-### Core Configurations
-- **JavaScript** - Essential JavaScript rules and best practices
-- **TypeScript** - Comprehensive TypeScript support with type-aware rules
-- **Ignores** - Default ignore patterns for common files and directories
-
-### Framework Configurations
-- **React** - React-specific rules and hooks validation
-- **React Native** - React Native optimized rules
-
-### Tool Integrations
-- **Import/Export** - Import ordering and validation via `eslint-plugin-import-x`
-- **Stylistic** - Code formatting rules via `@stylistic/eslint-plugin`
-- **Unused Imports** - Automatic unused import detection and removal
-- **Type-Aware Rules** - Advanced TypeScript type checking
-- **Modern JavaScript** - ES2022+ features support
 
 ## 🗂️ Configuration Architecture
 
