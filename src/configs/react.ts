@@ -90,6 +90,7 @@ export const react = async (
         ...(reactnative ? {} : { '@eslint-react/dom': plugins['@eslint-react/dom'] }),
         'react-hooks': reactHooksPlugin,
         'react-refresh': reactRefreshPlugin,
+        'react-web-api': plugins['@eslint-react/web-api'],
         '@eslint-react/hooks-extra': plugins['@eslint-react/hooks-extra'],
         '@eslint-react/naming-convention': plugins['@eslint-react/naming-convention'],
       },
@@ -260,6 +261,18 @@ export const react = async (
 
         // 推荐使用 Fragment 简写
         '@eslint-react/prefer-shorthand-fragment': 'warn',
+
+        // 避免泄漏的事件监听器
+        'react-web-api/no-leaked-event-listener': 'warn',
+
+        // 避免泄漏的间隔
+        'react-web-api/no-leaked-interval': 'warn',
+
+        // 避免泄漏的 ResizeObserver
+        'react-web-api/no-leaked-resize-observer': 'warn',
+
+        // 避免泄漏的超时
+        'react-web-api/no-leaked-timeout': 'warn',
 
         ...overrides,
       },
