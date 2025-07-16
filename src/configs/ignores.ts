@@ -1,4 +1,4 @@
-import type { EslintFlatConfigItem } from 'src/types';
+import type { EslintFlatConfigItem } from '../types';
 
 const DEFAULT_IGNORES = [
   '**/.parcel-cache',

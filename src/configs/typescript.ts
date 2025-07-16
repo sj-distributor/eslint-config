@@ -1,5 +1,4 @@
-import type { EslintFlatConfigItem, IOptionsFiles, IOptionsOverrides, IOptionsTypeScriptParserOptions, IOptionsTypeScriptWithTypes } from 'src/types';
-
+import type { EslintFlatConfigItem, IOptionsFiles, IOptionsOverrides, IOptionsTypeScriptParserOptions, IOptionsTypeScriptWithTypes } from '../types';
 import { loadModule } from '../utils';
 
 export const typescript = async (

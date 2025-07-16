@@ -1,6 +1,6 @@
 import { isPackageExists } from 'local-pkg';
-import type { EslintFlatConfigItem, IOptionsFiles, IOptionsOverrides, IOptionsReactNative, IOptionsTypeScriptParserOptions, IOptionsTypeScriptWithTypes } from 'src/types';
 
+import type { EslintFlatConfigItem, IOptionsFiles, IOptionsOverrides, IOptionsReactNative, IOptionsTypeScriptParserOptions, IOptionsTypeScriptWithTypes } from '../types';
 import { ensurePackages, loadModule } from '../utils';
 
 // 允许常量导出的 React Refresh 包列表

@@ -2,8 +2,7 @@ import type { Linter } from 'eslint';
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
 import { isPackageExists } from 'local-pkg';
 
-import { ignores, importX, react, stylistic, typescript } from './configs';
-import { javascript } from './configs/javascript';
+import { ignores, importX, react, stylistic, typescript, javascript } from './configs';
 import type { ConfigNames } from './eslintype';
 import type { Awaitable, IOptionsConfig, EslintFlatConfigItem } from './types';
 import { getOverrides, resolveSubOptions } from './utils';

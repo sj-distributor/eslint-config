@@ -3,7 +3,8 @@ import fs from 'node:fs/promises';
 import { builtinRules } from 'eslint/use-at-your-own-risk';
 import { flatConfigsToRulesDTS } from 'eslint-typegen/core';
 
-import { javascript, mergeFlatConfigs, react, stylistic, typescript, ignores, importX } from '../src';
+import { javascript, react, stylistic, typescript, ignores, importX } from '../src';
+import { mergeFlatConfigs } from '../src/utils';
 
 async function generateEslintType() {
   const configs = await mergeFlatConfigs(

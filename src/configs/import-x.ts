@@ -1,5 +1,6 @@
 import eslintPluginImportX from 'eslint-plugin-import-x';
-import type { EslintFlatConfigItem } from 'src/types';
+
+import type { EslintFlatConfigItem } from '../types';
 
 export const importX = async (
 ): Promise<EslintFlatConfigItem[]> => {
