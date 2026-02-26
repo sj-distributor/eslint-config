@@ -1,4 +1,4 @@
-import type { EslintFlatConfigItem } from '../types';
+import type { TypedFlatConfigItem } from '../types';
 
 const DEFAULT_IGNORES = [
   '**/.parcel-cache',
@@ -68,9 +68,9 @@ const DEFAULT_IGNORES = [
   '**/components.d.ts',
 ];
 
-export const ignores = (
+export function ignores(
   customIgnores: string[] = [],
-): EslintFlatConfigItem[] => {
+): TypedFlatConfigItem[] {
   return [
     {
       name: 'sj-distributor/ignores',
@@ -80,4 +80,4 @@ export const ignores = (
       ],
     },
   ];
-};
+}

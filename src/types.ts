@@ -1,110 +1,65 @@
-import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
-import type { ParserOptions } from '@typescript-eslint/parser';
 import type { Linter } from 'eslint';
+import type { ReactOptions } from './configs/react';
+import type { StylisticOptions } from './configs/stylistic';
+import type { RuleOptions } from './typegen';
 
-import type { RuleOptions } from './eslintype';
+export type UserConfig = TypedFlatConfigItem;
 
-export type Awaitable<T> = T | Promise<T>;
+export type Overrides = TypedFlatConfigItem['rules'];
 
-export type Rules = RuleOptions;
-
-export type EslintFlatConfigItem = Omit<Linter.Config<Linter.RulesRecord & Rules>, 'plugins'> & {
+/**
+ * An updated version of ESLint's `Linter.Config`, which provides autocompletion
+ * for `rules` and relaxes type limitations for `plugins` and `rules`, because
+ * many plugins still lack proper type definitions.
+ */
+export type TypedFlatConfigItem = Omit<Linter.Config<Linter.RulesRecord & RuleOptions>, 'plugins' | 'rules'> & {
+  /**
+   * An object containing a name-value mapping of plugin names to plugin objects.
+   * When `files` is specified, these plugins are only available to the matching files.
+   *
+   * @see `https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new#using-plugins-in-your-configuration`
+   */
+  // eslint-disable-next-line ts/no-explicit-any
   plugins?: Record<string, any>;
+
+  /**
+   * An object containing the configured rules. When `files` or `ignores` are
+   * specified, these rule configurations are only available to the matching files.
+   */
+  rules?: Linter.Config<Linter.RulesRecord & RuleOptions>['rules'];
 };
 
-export interface IOptionsFiles {
-  files?: string[];
-}
-
-export interface IOptionsReactNative {
-  reactnative?: boolean;
-}
-
-export interface IOptionsOverrides {
-  overrides?: EslintFlatConfigItem['rules'];
-}
-
-export interface IOptionsTypeScriptWithTypes {
+export interface AvengerOptions {
   /**
-   * When this options is provided, type aware rules will be enabled.
-   * @see https://typescript-eslint.io/linting/typed-linting/
-   */
-  tsconfigPath?: string;
-
-  /**
-   * Override type aware rules.
-   */
-  overridesTypeAware?: EslintFlatConfigItem['rules'];
-}
-
-export interface IOptionsTypeScriptParserOptions {
-  /**
-   * Additional parser options for TypeScript.
-   */
-  parserOptions?: Partial<ParserOptions>;
-
-  /**
-   * Glob patterns for files that should be type aware.
-   * @default ['**\/*.{ts,tsx}']
-   */
-  filesTypeAware?: string[];
-
-  /**
-   * Glob patterns for files that should not be type aware.
-   * @default ['**\/*.md\/**', '**\/*.astro/*.ts']
-   */
-  ignoresTypeAware?: string[];
-}
-
-export type OptionsTypescript
-  = (IOptionsTypeScriptWithTypes & IOptionsOverrides)
-    | (IOptionsTypeScriptParserOptions & IOptionsOverrides);
-
-export type ResolvedOptions<T> = T extends boolean
-  ? never
-  : NonNullable<T>;
-
-export interface IOptionsStylistic {
-  stylistic?: boolean | IStylisticConfig;
-}
-
-export interface IStylisticConfig
-  extends Pick<StylisticCustomizeOptions, 'indent' | 'quotes' | 'jsx' | 'semi'> {
-}
-
-export interface IOptionsConfig {
-  /**
-   * @default true
-   */
-  javascript?: IOptionsOverrides;
-
-  /**
-   * @default true
-   */
-  typescript?: boolean | OptionsTypescript;
-
-  /**
-   * @default true
-   */
-  stylistic?: boolean | (IStylisticConfig & IOptionsOverrides);
-
-  /**
+   * Enable React support.
    * @default false
    */
-  react?: boolean | IOptionsOverrides;
+  react?: boolean | ReactOptions;
 
   /**
-   * @default false
+   * Enable TypeScript support.
+   * @default true
    */
-  reactnative?: boolean | IOptionsOverrides;
-
-  ignores?: string[];
-
-  overrides?: {
-    javascript?: EslintFlatConfigItem['rules'];
-    typescript?: EslintFlatConfigItem['rules'];
-    stylistic?: EslintFlatConfigItem['rules'];
-    react?: EslintFlatConfigItem['rules'];
-    reactnative?: EslintFlatConfigItem['rules'];
+  typescript?: boolean | {
+    files?: string[];
+    overrides?: Overrides;
+    tsconfigPath?: string;
   };
+
+  /**
+   * Enable stylistic rules.
+   * @default true
+   */
+  stylistic?: boolean | StylisticOptions;
+
+  /**
+   * Enable unicorn rules.
+   * @default true
+   */
+  unicorn?: boolean;
+
+  /**
+   * Custom ignores.
+   */
+  ignores?: string[];
 }

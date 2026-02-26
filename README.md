@@ -1,267 +1,210 @@
 # @sj-distributor/eslint-config
 
-[![npm version](https://img.shields.io/npm/v/@sj-distributor/eslint-config.svg)](https://www.npmjs.com/package/@sj-distributor/eslint-config)
-[![license](https://img.shields.io/npm/l/@sj-distributor/eslint-config.svg)](https://github.com/sj-distributor/eslint-config/blob/main/LICENSE)
+The ESLint configuration for the SJ Distributor team, based on the latest ESLint Flat Config (v9+), offering out-of-the-box best practices for React + TypeScript.
 
----
+[中文文档](./README_CN.md)
 
-[![中文文档](https://img.shields.io/badge/中文文档-点击查看-red.svg)](https://github.com/sj-distributor/eslint-config/blob/master/README_CN.md)
+## Features
 
-🚀 **SJ Distributor Avenger Team ESLint Config** - A modern, opinionated ESLint configuration for JavaScript, TypeScript, and React projects.
+- **Modern**: Based on ESLint Flat Config, saying goodbye to `.eslintrc`.
+- **All-in-One**: Built-in rules for JavaScript, TypeScript, React (with Hooks, Refresh & Extra), Stylistic (Formatting), Unicorn, and more.
+- **Simplified**: Aliased rule prefixes (e.g., `ts/` for TypeScript, `@stylistic/` for formatting).
+- **Type-Safe**: Complete TypeScript type definitions, no more guessing configurations.
+- **Zero-Config**: Enables best practices by default.
+- **Flexible**: Easy customization and rule overrides via a simple API.
 
-> [!WARNING]
-> Requires ESLint version **v9.18.0** or higher.
-
-## ✨ Features
-
-- 🎯 **Zero Config** - Works out of the box with sensible defaults
-- 🔧 **Highly Configurable** - Customize rules to fit your project needs
-- 📦 **Modular Design** - Enable only the features you need
-- 🚀 **Modern Standards** - Built for ESLint v9+ flat config
-- 🎨 **Code Style** - Integrated with @stylistic for consistent formatting
-- ⚡ **Performance** - Optimized for fast linting with smart defaults
-- 🔍 **Type-Aware** - Full TypeScript support with type-aware rules
-- ⚛️ **React Ready** - Comprehensive React and React Native support
-
-## 📦 Installation
+## Installation
 
 ```bash
-# Using pnpm (recommended)
 pnpm add -D eslint @sj-distributor/eslint-config
+```
 
-# Using npm
+Or using npm/yarn:
+
+```bash
 npm install -D eslint @sj-distributor/eslint-config
-
-# Using yarn
+# or
 yarn add -D eslint @sj-distributor/eslint-config
 ```
 
-## 🚀 Quick Start
+> Note: This project requires ESLint v9+ and TypeScript v5+.
 
-### Basic Usage
+## Quick Start
 
-Create an `eslint.config.mjs` file in your project root:
+Create an `eslint.config.ts` file in your project root:
 
-```js
-// eslint.config.mjs
+```typescript
 import { avenger } from '@sj-distributor/eslint-config';
 
 export default avenger();
 ```
 
-### TypeScript Project
+> **Tip**: If you are using `eslint.config.ts` (TypeScript), ensure your environment supports loading TS files. You might need to install `jiti` or use `tsx`. The VS Code ESLint extension supports this out of the box but might take a moment to initialize.
 
-```js
-// eslint.config.mjs
-import { avenger } from '@sj-distributor/eslint-config';
+That's it! You now have a complete Linting setup.
 
+## Configuration Options
+
+The `avenger` function accepts two types of arguments:
+
+1.  **Options**: Feature toggles and basic configuration.
+2.  **UserConfigs**: (Optional) User override configurations, supporting multiple arguments.
+
+### Basic Configuration (Options)
+
+```typescript
 export default avenger({
-  typescript: true,
-  stylistic: true,
+  // Enable/Disable specific modules (all enabled by default)
+  react: true,       // Includes React, Hooks, Refresh
+  typescript: true,  // Includes TS recommended rules
+  stylistic: true,   // Includes code style and formatting rules
+  unicorn: true,     // Includes Unicorn power rules
+
+  // Custom ignores (merged with default ignores)
+  ignores: ['**/temp', 'src/legacy/**/*.ts'],
 });
 ```
 
-### React Project
+### Advanced Configuration
 
-```js
-// eslint.config.mjs
-import { avenger } from '@sj-distributor/eslint-config';
+Some modules support more granular configuration, including module-specific rule overrides:
 
+```typescript
 export default avenger({
-  typescript: true,
-  react: true,
-  stylistic: {
-    jsx: true,
-    quotes: 'single',
-    semi: true,
-  },
-});
-```
-
-### React Native Project
-
-```js
-// eslint.config.mjs
-import { avenger } from '@sj-distributor/eslint-config';
-
-export default avenger({
-  typescript: true,
-  react: true,
-  reactnative: true,
-});
-```
-
-## ⚙️ Configuration Options
-
-### Core Options
-
-```js
-avenger({
-  // Enable TypeScript support (auto-detected)
-  typescript: true,
-  
-  // Enable stylistic formatting rules
-  stylistic: {
-    jsx: true,        // Enable JSX formatting
-    quotes: 'single', // 'single' | 'double'
-    semi: true,       // Enable semicolons
-    indent: 2,        // Indentation size
-  },
-  
-  // Enable React support
-  react: true,
-  
-  // Enable React Native support
-  reactnative: true,
-  
-  // Custom ignore patterns
-  ignores: {
-    customIgnores: ['custom-dir/**'],
-  },
-});
-```
-
-### TypeScript Configuration
-
-```js
-avenger({
+  // TypeScript Configuration
   typescript: {
-    // Path to tsconfig.json for type-aware rules
-    tsconfigPath: './tsconfig.json',
-    
-    // Custom parser options
-    parserOptions: {
-      project: './tsconfig.json',
-    },
-    
-    // Override specific rules
+    files: ['**/*.ts', '**/*.tsx'], // Scan only specific files
+    tsconfigPath: 'tsconfig.json', // Enable type-aware linting
     overrides: {
-      '@typescript-eslint/no-unused-vars': 'warn',
+      'ts/no-explicit-any': 'error', // Override specific TS rules (prefix: ts/)
+    },
+  },
+
+  // React Configuration
+  react: {
+    files: ['**/*.tsx'], 
+    typescript: true, // Enable TS support for React (defaults to global TS toggle)
+    overrides: {
+      'react-hooks/exhaustive-deps': 'warn',
+    },
+  },
+
+  // Stylistic Configuration (Replaces Prettier)
+  stylistic: {
+    indent: 2,           // Indentation spaces
+    quotes: 'single',    // Quote style: 'single' | 'double'
+    semi: true,          // Use semicolons
+    jsx: true,           // Enable JSX formatting
+    
+    // Override specific Stylistic rules
+    overrides: {
+      '@stylistic/jsx-max-props-per-line': ['error', { maximum: 1 }],
     },
   },
 });
 ```
 
-### Advanced Usage
+## Rule Overrides
 
-```js
-import { avenger } from '@sj-distributor/eslint-config';
+You can override rules in two ways:
 
+1.  **Module-Specific Overrides**: Using the `overrides` property within each module config (as shown above).
+2.  **Global Overrides**: Passing standard ESLint Flat Config objects as subsequent arguments to `avenger`.
+
+**Priority**: User Global Overrides > Module Specific Overrides > Project Defaults > Official Recommended Rules.
+
+### Example: Global Overrides
+
+```typescript
 export default avenger(
+  { react: true, typescript: true },
+  
+  // User custom config object
   {
-    typescript: true,
-    react: true,
-    stylistic: true,
-  },
-  // Add custom configs
-  {
-    files: ['**/*.test.ts'],
     rules: {
+      // Disable console warnings globally
       'no-console': 'off',
+      
+      // Modify React Hooks rules
+      'react-hooks/exhaustive-deps': 'warn',
     },
-  },
-  // Add more custom configs...
+  }
 );
 ```
 
-## 🗂️ Configuration Architecture
+### Example: File-Specific Overrides
 
-Our configuration uses a flat architecture where all configuration files are stored directly in the `src/configs/` directory:
+Leverage Flat Config's `files` property to apply rules only to specific files:
 
-### 📁 Configuration File Structure
-
+```typescript
+export default avenger(
+  {}, // Use default options
+  
+  // Rules for test files
+  {
+    files: ['test/**/*.ts', '**/*.test.ts'],
+    rules: {
+      'no-console': 'off',
+      'ts/no-explicit-any': 'off',
+    },
+  },
+  
+  // Relaxed rules for legacy code
+  {
+    files: ['src/legacy/**/*.js'],
+    rules: {
+      'unicorn/filename-case': 'off',
+    },
+  }
+);
 ```
-src/configs/
-├── ignores.ts     # Default ignore mode
-├── javascript.ts  # Basic JavaScript rules
-├── typescript.ts  # TypeScript language support
-├── react.ts       # React framework rules
-├── import-x.ts    # Import/export rules
-├── stylistic.ts   # Code style rules
-└── index.ts       # Unified export
+
+## Type-Aware Linting
+
+To enable powerful type-aware rules (like checking for unhandled promises or misused promises), provide the `tsconfigPath` option to the typescript config:
+
+```typescript
+export default avenger({
+  typescript: {
+    tsconfigPath: 'tsconfig.json',
+  },
+});
 ```
 
-### 🎯 Adding New Configurations
+This will automatically enable strict type-checking rules. Note that this might slightly increase linting time.
 
-When you need to add new configurations, please follow these steps:
+## VS Code Integration
 
-1. **Create configuration file** - Create a new `.ts` file in the `src/configs/` directory
-2. **Implement configuration function** - Export a configuration function that follows the standard
-3. **Update index file** - Add the export in `src/configs/index.ts`
-4. **Update main configuration** - Integrate the new configuration in `src/main.ts`
-5. **Update documentation** - Add usage instructions in README
+For the best development experience (auto-fix, highlighting), install the [VS Code ESLint Extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) and add the following to your project's `.vscode/settings.json`:
 
-### 📝 Configuration File Naming Convention
+```json
+{
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ]
+}
+```
 
-- Use lowercase letters and hyphens: `kebab-case.ts`
-- File names should be concise and clear, reflecting the configuration purpose
-- Each configuration file should export a default function
-- Re-export in `index.ts`
+## FAQ
 
-## 🎯 Rule Philosophy
+### Why no Prettier?
+This config integrates `@stylistic/eslint-plugin`, providing a complete set of code formatting rules (indentation, spacing, quotes, etc.), fully replacing Prettier. This unifies the toolchain and avoids conflicts between ESLint and Prettier.
 
-Our configuration follows these principles:
-
-- **🛡️ Safety First** - Prevent common bugs and runtime errors
-- **📖 Readability** - Enforce consistent and readable code style
-- **🚀 Modern Practices** - Encourage modern JavaScript/TypeScript patterns
-- **⚡ Performance** - Avoid performance anti-patterns
-- **🔧 Flexibility** - Easy to customize and extend
-
-## 🔧 Development
+### How to inspect current rules?
+Use [eslint-config-inspector](https://github.com/eslint/config-inspector) to visualize the final configuration:
 
 ```bash
-# Install dependencies
-pnpm install
-
-# Build the package
-pnpm build
-
-# Run linting
-pnpm lint
-
-# Fix linting issues
-pnpm lint:fix
-
-# Type checking
-pnpm typecheck
-
-# Generate ESLint types
-pnpm eslint:typegen
-
-# Start config inspector
-pnpm dev
+npx @eslint/config-inspector
 ```
 
-## 📚 Migration Guide
+## License
 
-### From ESLint v8
-
-If you're migrating from ESLint v8, you'll need to:
-
-1. Update to ESLint v9+
-2. Convert your `.eslintrc.*` to `eslint.config.mjs`
-3. Update your configuration format
-
-```js
-// Old (.eslintrc.js)
-module.exports = {
-  extends: ['@sj-distributor/eslint-config'],
-};
-
-// New (eslint.config.mjs)
-import { avenger } from '@sj-distributor/eslint-config';
-export default avenger();
-```
-
-## 📄 License
-
-[MIT](./LICENSE) © 2024 SJ Distributor Avenger Team
-
-## 🙏 Acknowledgments
-
-This configuration is inspired by and built upon:
-- [@antfu/eslint-config](https://github.com/antfu/eslint-config)
-- [ESLint Stylistic](https://eslint.style/)
-- [TypeScript ESLint](https://typescript-eslint.io/)
-- [ESLint React](https://github.com/Rel1cx/eslint-react)
+MIT
