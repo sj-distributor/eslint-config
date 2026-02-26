@@ -46,14 +46,14 @@ export async function react(
     {
       name: 'sj-distributor/react/setup',
       plugins: {
+        'react': plugins['@eslint-react'],
+        'react-dom': plugins['@eslint-react/dom'],
         'react-hooks': pluginReactHooks,
         'react-refresh': pluginReactRefresh,
-        '@eslint-react': plugins['@eslint-react'],
-        '@eslint-react/dom': plugins['@eslint-react/dom'],
-        '@eslint-react/hooks-extra': plugins['@eslint-react/hooks-extra'],
-        '@eslint-react/naming-convention': plugins['@eslint-react/naming-convention'],
-        '@eslint-react/rsc': plugins['@eslint-react/rsc'],
-        '@eslint-react/web-api': plugins['@eslint-react/web-api'],
+        'react-hooks-extra': plugins['@eslint-react/hooks-extra'],
+        'react-naming-convention': plugins['@eslint-react/naming-convention'],
+        'react-rsc': plugins['@eslint-react/rsc'],
+        'react-web-api': plugins['@eslint-react/web-api'],
       },
     },
     {
@@ -77,6 +77,9 @@ export async function react(
 
         // react-refresh
         ...pluginReactRefresh.configs.recommended.rules,
+
+        // recommended rules from eslint-plugin-react-hooks-extra https://eslint-react.xyz/docs/rules/overview#hooks-extra-rules
+        'react-hooks-extra/no-direct-set-state-in-use-effect': 'warn'
       },
     },
     {
