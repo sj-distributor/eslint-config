@@ -18,6 +18,14 @@ The ESLint configuration for the SJ Distributor team, based on the latest ESLint
 pnpm add -D eslint @sj-distributor/eslint-config
 ```
 
+Or using npm/yarn:
+
+```bash
+npm install -D eslint @sj-distributor/eslint-config
+# or
+yarn add -D eslint @sj-distributor/eslint-config
+```
+
 > Note: This project requires ESLint v9+ and TypeScript v5+.
 
 ## Quick Start
@@ -29,6 +37,8 @@ import { avenger } from '@sj-distributor/eslint-config';
 
 export default avenger();
 ```
+
+> **Tip**: If you are using `eslint.config.ts` (TypeScript), ensure your environment supports loading TS files. You might need to install `jiti` or use `tsx`. The VS Code ESLint extension supports this out of the box but might take a moment to initialize.
 
 That's it! You now have a complete Linting setup.
 
@@ -63,6 +73,7 @@ export default avenger({
   // TypeScript Configuration
   typescript: {
     files: ['**/*.ts', '**/*.tsx'], // Scan only specific files
+    tsconfigPath: 'tsconfig.json', // Enable type-aware linting
     overrides: {
       '@typescript-eslint/no-explicit-any': 'error', // Override specific TS rules
     },
@@ -146,6 +157,20 @@ export default avenger(
   }
 );
 ```
+
+## Type-Aware Linting
+
+To enable powerful type-aware rules (like checking for unhandled promises or misused promises), provide the `tsconfigPath` option to the typescript config:
+
+```typescript
+export default avenger({
+  typescript: {
+    tsconfigPath: 'tsconfig.json',
+  },
+});
+```
+
+This will automatically enable strict type-checking rules. Note that this might slightly increase linting time.
 
 ## VS Code Integration
 

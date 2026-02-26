@@ -18,7 +18,15 @@ SJ Distributor 团队专用的 ESLint 配置，基于最新的 ESLint Flat Confi
 pnpm add -D eslint @sj-distributor/eslint-config
 ```
 
-> 注意：本项目依赖 ESLint v9+ 和 TypeScript v5+.
+或者使用 npm/yarn:
+
+```bash
+npm install -D eslint @sj-distributor/eslint-config
+# 或
+yarn add -D eslint @sj-distributor/eslint-config
+```
+
+> 注意：本项目依赖 ESLint v9+ 和 TypeScript v5+。
 
 ## 快速开始
 
@@ -29,6 +37,8 @@ import { avenger } from '@sj-distributor/eslint-config';
 
 export default avenger();
 ```
+
+> **提示**：如果您使用 `.ts` 配置文件，请确保您的开发环境支持加载 TS 模块（如安装 `jiti` 或 `tsx`）。VS Code ESLint 插件通常开箱即用，但可能需要几秒钟来初始化 TypeScript 运行时。
 
 这就完了！你现在已经拥有了完整的 Lint 规则。
 
@@ -63,6 +73,7 @@ export default avenger({
   // TypeScript 配置
   typescript: {
     files: ['**/*.ts', '**/*.tsx'], // 仅扫描特定文件
+    tsconfigPath: 'tsconfig.json', // 启用类型感知 Lint
     overrides: {
       '@typescript-eslint/no-explicit-any': 'error', // 仅覆盖 TS 模块的特定规则
     },
@@ -146,6 +157,20 @@ export default avenger(
   }
 );
 ```
+
+## 类型感知 Lint (Type-Aware Linting)
+
+如果你想启用强大的类型感知规则（例如检查未处理的 Promise 或误用的 Promise），请在 typescript 配置中提供 `tsconfigPath` 选项：
+
+```typescript
+export default avenger({
+  typescript: {
+    tsconfigPath: 'tsconfig.json',
+  },
+});
+```
+
+这将自动启用一系列严格的类型检查规则。请注意，这可能会略微增加 Lint 的运行时间。
 
 ## VS Code 集成
 
