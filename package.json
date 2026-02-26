@@ -2,42 +2,30 @@
   "name": "@sj-distributor/eslint-config",
   "version": "0.3.0-meta.0",
   "description": "SJ Distributor Avenger Team ESLint Config",
+  "keywords": [
+    "eslint",
+    "eslint-config"
+  ],
+  "author": "Simon Feng",
+  "license": "MIT",
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     }
   },
-  "author": "Simon Feng",
-  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
-  "keywords": [
-    "eslint",
-    "eslint-config"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
   "scripts": {
     "build": "pnpm typegen && tsup",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "typegen": "tsx scripts/typegen.ts",
     "release": "pnpm build && bumpp && pnpm publish"
-  },
-  "peerDependencies": {
-    "eslint": "^10.0.0",
-    "typescript": "^5.0.0"
-  },
-  "peerDependenciesMeta": {
-    "typescript": {
-      "optional": true
-    }
   },
   "dependencies": {
     "@eslint-react/eslint-plugin": "^2.13.0",
@@ -59,5 +47,17 @@
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },
-  "packageManager": "pnpm@9.15.4"
+  "peerDependencies": {
+    "eslint": "^10.0.0",
+    "typescript": "^5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
+  },
+  "packageManager": "pnpm@9.15.4",
+  "publishConfig": {
+    "access": "public"
+  }
 }
