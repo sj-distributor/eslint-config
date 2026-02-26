@@ -1,7 +1,7 @@
 {
   "name": "@sj-distributor/eslint-config",
   "version": "0.3.0-meta.0",
-  "description": "Optimized ESLint Config",
+  "description": "SJ Distributor Avenger Team ESLint Config",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -14,6 +14,10 @@
   "files": [
     "dist"
   ],
+  "keywords": [
+    "eslint",
+    "eslint-config"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -24,7 +28,7 @@
     "typegen": "tsx scripts/typegen.ts"
   },
   "peerDependencies": {
-    "eslint": "^9.0.0",
+    "eslint": "^10.0.0",
     "typescript": "^5.0.0"
   },
   "peerDependenciesMeta": {
@@ -33,16 +37,16 @@
     }
   },
   "dependencies": {
-    "@eslint-react/eslint-plugin": "^1.53.1",
+    "@eslint-react/eslint-plugin": "^2.13.0",
     "@stylistic/eslint-plugin": "^5.9.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.26",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
     "eslint-plugin-unicorn": "^63.0.0",
     "typescript-eslint": "^8.56.1"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
-    "eslint": "^9.39.3",
+    "@types/node": "^25.3.0",
+    "eslint": "^10.0.2",
     "eslint-typegen": "^2.3.1",
     "jiti": "^2.6.1",
     "tsup": "^8.5.1",

@@ -15,6 +15,11 @@ export interface ReactOptions {
    * @default true
    */
   typescript?: boolean;
+
+  /**
+   * Override React rules.
+   */
+  overrides?: Linter.Config['rules'];
 }
 
 export async function react(
@@ -23,6 +28,7 @@ export async function react(
   const {
     files = ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
     typescript = true,
+    overrides = {},
   } = options;
 
   const configs: Linter.Config[] = [];
@@ -32,6 +38,10 @@ export async function react(
     files,
     ...reactPlugin.configs.recommended,
     name: 'sj-distributor/react/recommended',
+    rules: {
+      ...reactPlugin.configs.recommended.rules,
+      ...overrides,
+    },
   });
 
   if (typescript) {
@@ -39,6 +49,10 @@ export async function react(
       files,
       ...reactPlugin.configs['recommended-typescript'],
       name: 'sj-distributor/react/recommended-typescript',
+      rules: {
+        ...reactPlugin.configs['recommended-typescript'].rules,
+        ...overrides,
+      },
     });
   }
 
@@ -46,9 +60,6 @@ export async function react(
   configs.push({
     name: 'sj-distributor/react/hooks',
     files,
-    plugins: {
-      'react-hooks': hooksPlugin,
-    },
     rules: {
       ...hooksPlugin.configs.recommended.rules,
     },
@@ -58,11 +69,8 @@ export async function react(
   configs.push({
     name: 'sj-distributor/react/refresh',
     files,
-    plugins: {
-      'react-refresh': refreshPlugin,
-    },
     rules: {
-      'react-refresh/only-export-components': 'warn',
+      ...refreshPlugin.configs.recommended.rules,
     },
   });
 
