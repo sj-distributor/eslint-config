@@ -1,4 +1,4 @@
-import type { Linter } from 'eslint';
+import type { TypedFlatConfigItem } from '../types';
 
 const DEFAULT_IGNORES = [
   '**/.parcel-cache',
@@ -70,7 +70,7 @@ const DEFAULT_IGNORES = [
 
 export function ignores(
   customIgnores: string[] = [],
-): Linter.Config[] {
+): TypedFlatConfigItem[] {
   return [
     {
       name: 'sj-distributor/ignores',

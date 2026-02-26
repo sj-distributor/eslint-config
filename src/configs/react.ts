@@ -1,8 +1,6 @@
-import reactPlugin from '@eslint-react/eslint-plugin';
-import type { Linter } from 'eslint';
-import hooksPlugin from 'eslint-plugin-react-hooks';
-import refreshPlugin from 'eslint-plugin-react-refresh';
+import type { TypedFlatConfigItem } from '../types';
 import type { Overrides } from '../types';
+import { interopDefault } from '../utils';
 
 export interface ReactOptions {
   /**
@@ -25,55 +23,66 @@ export interface ReactOptions {
 
 export async function react(
   options: ReactOptions = {},
-): Promise<Linter.Config[]> {
+): Promise<TypedFlatConfigItem[]> {
   const {
     files = ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
     typescript = true,
     overrides = {},
   } = options;
 
-  const configs: Linter.Config[] = [];
+  const [
+    pluginReact,
+    pluginReactHooks,
+    pluginReactRefresh,
+  ] = await Promise.all([
+    interopDefault(import('@eslint-react/eslint-plugin')),
+    interopDefault(import('eslint-plugin-react-hooks')),
+    interopDefault(import('eslint-plugin-react-refresh')),
+  ] as const);
 
-  // 1. React Core
-  configs.push({
-    files,
-    ...reactPlugin.configs.recommended,
-    name: 'sj-distributor/react/recommended',
-    rules: {
-      ...reactPlugin.configs.recommended.rules,
-      ...overrides,
-    },
-  });
+  const plugins = (pluginReact.configs.all as any).plugins;
 
-  if (typescript) {
-    configs.push({
-      files,
-      ...reactPlugin.configs['recommended-typescript'],
-      name: 'sj-distributor/react/recommended-typescript',
-      rules: {
-        ...reactPlugin.configs['recommended-typescript'].rules,
-        ...overrides,
+  return [
+    {
+      name: 'sj-distributor/react/setup',
+      plugins: {
+        'react-hooks': pluginReactHooks,
+        'react-refresh': pluginReactRefresh,
+        '@eslint-react': plugins['@eslint-react'],
+        '@eslint-react/dom': plugins['@eslint-react/dom'],
+        '@eslint-react/hooks-extra': plugins['@eslint-react/hooks-extra'],
+        '@eslint-react/naming-convention': plugins['@eslint-react/naming-convention'],
+        '@eslint-react/rsc': plugins['@eslint-react/rsc'],
+        '@eslint-react/web-api': plugins['@eslint-react/web-api'],
       },
-    });
-  }
-
-  // 2. React Hooks
-  configs.push({
-    name: 'sj-distributor/react/hooks',
-    files,
-    rules: {
-      ...hooksPlugin.configs.recommended.rules,
     },
-  });
+    {
+      name: 'sj-distributor/react/rules',
+      files,
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
+        },
+        sourceType: 'module',
+      },
+      rules: {
+        // recommended rules from @eslint-react/eslint-plugin
+        ...pluginReact.configs.recommended.rules,
+        ...(typescript ? pluginReact.configs['recommended-typescript'].rules : {}),
 
-  // 3. React Refresh
-  configs.push({
-    name: 'sj-distributor/react/refresh',
-    files,
-    rules: {
-      ...refreshPlugin.configs.recommended.rules,
+        // react-hooks
+        ...pluginReactHooks.configs.recommended.rules,
+
+        // react-refresh
+        ...pluginReactRefresh.configs.recommended.rules,
+      },
     },
-  });
-
-  return configs;
+    {
+      name: 'sj-distributor/react/overrides',
+      files,
+      rules: overrides,
+    },
+  ];
 }

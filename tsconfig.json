@@ -1,15 +1,12 @@
 {
   "compilerOptions": {
+    "target": "ESNext",
+    "baseUrl": ".",
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "target": "ESNext",
-    "lib": ["ESNext"],
     "strict": true,
-    "skipLibCheck": true,
-    "noEmit": true,
     "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true
+    "skipLibCheck": true
   },
   "include": ["src", "scripts", "eslint.config.ts"]
 }

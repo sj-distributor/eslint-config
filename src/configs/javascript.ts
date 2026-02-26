@@ -1,5 +1,5 @@
 import js from '@eslint/js';
-import type { Linter } from 'eslint';
+import type { TypedFlatConfigItem } from '../types';
 import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 import type { Overrides } from '../types';
@@ -8,8 +8,8 @@ export async function javascript(
   options: {
     files?: string[];
     overrides?: Overrides;
-  } = {}
-): Promise<Linter.Config[]> {
+  } = {},
+): Promise<TypedFlatConfigItem[]> {
   const {
     files = ['**/*.{js,mjs,cjs}'],
     overrides = {},
@@ -106,9 +106,12 @@ export async function javascript(
           },
         ],
         'symbol-description': 'error',
-
-        ...overrides,
       },
+    },
+    {
+      name: 'sj-distributor/javascript/overrides',
+      files,
+      rules: overrides,
     },
   ];
 }

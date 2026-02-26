@@ -6,4 +6,5 @@ export default defineConfig({
   dts: true,
   clean: true,
   shims: true,
+  outDir: 'dist',
 });

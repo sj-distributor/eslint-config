@@ -1,5 +1,5 @@
 import stylisticPlugin from '@stylistic/eslint-plugin';
-import type { Linter } from 'eslint';
+import type { TypedFlatConfigItem } from '../types';
 import type { Overrides } from '../types';
 
 export interface StylisticOptions {
@@ -12,7 +12,7 @@ export interface StylisticOptions {
 
 export function stylistic(
   options: StylisticOptions = {},
-): Linter.Config[] {
+): TypedFlatConfigItem[] {
   const {
     indent = 2,
     quotes = 'single',
@@ -45,9 +45,11 @@ export function stylistic(
 
         // JSX Quotes
         '@stylistic/jsx-quotes': ['error', 'prefer-double'],
-
-        ...overrides,
       },
+    },
+    {
+      name: 'sj-distributor/stylistic/overrides',
+      rules: overrides,
     },
   ];
 }

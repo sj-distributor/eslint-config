@@ -1,7 +1,7 @@
-import type { Linter } from 'eslint';
+import type { TypedFlatConfigItem } from '../types';
 import unicornPlugin from 'eslint-plugin-unicorn';
 
-export function unicorn(): Linter.Config[] {
+export function unicorn(): TypedFlatConfigItem[] {
   return [
     {
       name: 'sj-distributor/unicorn',

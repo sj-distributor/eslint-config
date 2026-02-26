@@ -16,15 +16,15 @@ export async function avenger(
   const configs: UserConfig[] = [];
 
   // 1. Ignores
-  configs.push(...ignores(customIgnores) as UserConfig[]);
+  configs.push(...ignores(customIgnores));
 
   // 2. JavaScript (always enabled)
-  configs.push(...(await javascript()) as UserConfig[]);
+  configs.push(...(await javascript()));
 
   // 3. TypeScript
   if (enableTypescript) {
     const tsOptions = typeof enableTypescript === 'object' ? enableTypescript : {};
-    configs.push(...(await typescript(tsOptions)) as UserConfig[]);
+    configs.push(...(await typescript(tsOptions)));
   }
 
   // 4. React
@@ -33,18 +33,18 @@ export async function avenger(
     if (enableTypescript && reactOptions.typescript === undefined) {
       reactOptions.typescript = true;
     }
-    configs.push(...(await react(reactOptions)) as UserConfig[]);
+    configs.push(...(await react(reactOptions)));
   }
 
   // 5. Stylistic
   if (enableStylistic) {
     const stylisticOptions = typeof enableStylistic === 'object' ? enableStylistic : {};
-    configs.push(...stylistic(stylisticOptions) as UserConfig[]);
+    configs.push(...stylistic(stylisticOptions));
   }
 
   // 6. Unicorn
   if (enableUnicorn) {
-    configs.push(...unicorn() as UserConfig[]);
+    configs.push(...unicorn());
   }
 
   // 7. User overrides

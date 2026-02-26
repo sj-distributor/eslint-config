@@ -1,6 +1,5 @@
-import type { Linter } from 'eslint';
-import tseslint from 'typescript-eslint';
-import type { Overrides } from '../types';
+import { interopDefault, renameRules } from '../utils';
+import type { Overrides, TypedFlatConfigItem } from '../types';
 
 export async function typescript(
   options: {
@@ -8,20 +7,22 @@ export async function typescript(
     overrides?: Overrides;
     tsconfigPath?: string;
   } = {},
-): Promise<Linter.Config[]> {
+): Promise<TypedFlatConfigItem[]> {
   const {
     files = ['**/*.{ts,tsx,mts,cts}'],
     overrides = {},
     tsconfigPath,
   } = options;
 
-  const typeAwareRules: Linter.Config[] = [];
+  const pluginTs = await interopDefault(import('typescript-eslint'));
 
-  const makeParser = (typeAware: boolean): Linter.Config => {
+  const typeAwareRules: TypedFlatConfigItem[] = [];
+
+  const makeParser = (typeAware: boolean): TypedFlatConfigItem => {
     return {
       files,
       languageOptions: {
-        parser: tseslint.parser as any,
+        parser: pluginTs.parser,
         parserOptions: {
           sourceType: 'module',
           ...(typeAware && tsconfigPath)
@@ -37,107 +38,105 @@ export async function typescript(
   };
 
   if (tsconfigPath) {
-    const typeAwareConfig: Linter.Config = {
+    const typeAwareConfig: TypedFlatConfigItem = {
       name: 'sj-distributor/typescript/type-aware-rules',
       files,
       rules: {
         // --- TypeScript Type Aware Rules ---
-        
-        '@typescript-eslint/await-thenable': 'error',
-        '@typescript-eslint/no-floating-promises': 'error',
-        '@typescript-eslint/no-for-in-array': 'error',
-        '@typescript-eslint/no-implied-eval': 'error',
-        '@typescript-eslint/no-misused-promises': 'error',
-        '@typescript-eslint/no-unnecessary-type-assertion': 'error',
-        '@typescript-eslint/no-unsafe-argument': 'error',
-        '@typescript-eslint/no-unsafe-assignment': 'error',
-        '@typescript-eslint/no-unsafe-call': 'error',
-        '@typescript-eslint/no-unsafe-member-access': 'error',
-        '@typescript-eslint/no-unsafe-return': 'error',
-        '@typescript-eslint/require-await': 'error',
-        '@typescript-eslint/restrict-plus-operands': 'error',
-        '@typescript-eslint/restrict-template-expressions': 'error',
-        '@typescript-eslint/unbound-method': 'error',
-        
+
+        'ts/await-thenable': 'error',
+        'ts/no-floating-promises': 'error',
+        'ts/no-for-in-array': 'error',
+        'ts/no-implied-eval': 'error',
+        'ts/no-misused-promises': 'error',
+        'ts/no-unnecessary-type-assertion': 'error',
+        'ts/no-unsafe-argument': 'error',
+        'ts/no-unsafe-assignment': 'error',
+        'ts/no-unsafe-call': 'error',
+        'ts/no-unsafe-member-access': 'error',
+        'ts/no-unsafe-return': 'error',
+        'ts/require-await': 'error',
+        'ts/restrict-plus-operands': 'error',
+        'ts/restrict-template-expressions': 'error',
+        'ts/unbound-method': 'error',
+
         // Disable ESLint rules that are handled by Type Aware Rules
         'dot-notation': 'off',
         'no-implied-eval': 'off',
         'require-await': 'off',
-        '@typescript-eslint/dot-notation': ['error', { allowKeywords: true }],
-      } as any,
+        'ts/dot-notation': ['error', { allowKeywords: true }],
+      },
     };
     typeAwareRules.push(typeAwareConfig);
   }
 
-  const recommendedRules = tseslint.configs.recommended.reduce((acc, config) => {
-    return { ...acc, ...config.rules };
-  }, {});
+  const recommendedRules = pluginTs.configs.recommended.reduce((acc, config) => {
+    return { ...acc, ...renameRules(config.rules || {}, { '@typescript-eslint': 'ts' }) };
+  }, {} as TypedFlatConfigItem['rules']);
 
-  const strictRules = tseslint.configs.strict.reduce((acc, config) => {
-    return { ...acc, ...config.rules };
-  }, {});
-
-  const recommendedConfig: Linter.Config = {
-    name: 'sj-distributor/typescript/rules',
-    files,
-    plugins: {
-      '@typescript-eslint': tseslint.plugin,
-    },
-    rules: {
-      ...recommendedRules,
-      ...strictRules,
-
-      // --- Custom Rules ---
-
-      // Allow any but warn
-      '@typescript-eslint/no-explicit-any': 'warn',
-      
-      // Enforce type imports
-      '@typescript-eslint/consistent-type-imports': ['error', {
-        prefer: 'type-imports',
-        disallowTypeAnnotations: false,
-      }],
-      
-      // Allow unused vars (handled by unused-imports)
-      '@typescript-eslint/no-unused-vars': 'off',
-      
-      // Allow non-null assertions
-      '@typescript-eslint/no-non-null-assertion': 'off',
-      
-      // Allow type alias for definitions
-      '@typescript-eslint/consistent-type-definitions': 'off',
-      
-      // Enforce method signature style
-      '@typescript-eslint/method-signature-style': ['error', 'property'],
-
-      // Disable ESLint rules that are handled by TypeScript
-      'no-dupe-class-members': 'off',
-      'no-redeclare': 'off',
-      'no-use-before-define': 'off',
-      'no-useless-constructor': 'off',
-
-      // Enable TypeScript versions of above rules
-      '@typescript-eslint/no-dupe-class-members': 'error',
-      '@typescript-eslint/no-redeclare': ['error', { builtinGlobals: false }],
-      '@typescript-eslint/no-use-before-define': ['error', { classes: false, functions: false, variables: true }],
-      '@typescript-eslint/no-useless-constructor': 'off', // constructor parameters property is useful
-
-      ...overrides,
-    } as any,
-  };
+  const strictRules = pluginTs.configs.strict.reduce((acc, config) => {
+    return { ...acc, ...renameRules(config.rules || {}, { '@typescript-eslint': 'ts' }) };
+  }, {} as TypedFlatConfigItem['rules']);
 
   return [
     {
       name: 'sj-distributor/typescript/setup',
       plugins: {
-        '@typescript-eslint': tseslint.plugin,
+        ts: pluginTs.plugin,
       },
     },
     ...(tsconfigPath
       ? [makeParser(false), makeParser(true)]
       : [makeParser(false)]
     ),
-    recommendedConfig,
+    {
+      name: 'sj-distributor/typescript/rules',
+      files,
+      rules: {
+        ...recommendedRules,
+        ...strictRules,
+
+        // --- Custom Rules ---
+
+        // Allow any but warn
+        'ts/no-explicit-any': 'warn',
+
+        // Enforce type imports
+        'ts/consistent-type-imports': ['error', {
+          prefer: 'type-imports',
+          disallowTypeAnnotations: false,
+        }],
+
+        // Allow unused vars (handled by unused-imports)
+        'ts/no-unused-vars': 'off',
+
+        // Allow non-null assertions
+        'ts/no-non-null-assertion': 'off',
+
+        // Allow type alias for definitions
+        'ts/consistent-type-definitions': 'off',
+
+        // Enforce method signature style
+        'ts/method-signature-style': ['error', 'property'],
+
+        // Disable ESLint rules that are handled by TypeScript
+        'no-dupe-class-members': 'off',
+        'no-redeclare': 'off',
+        'no-use-before-define': 'off',
+        'no-useless-constructor': 'off',
+
+        // Enable TypeScript versions of above rules
+        'ts/no-dupe-class-members': 'error',
+        'ts/no-redeclare': ['error', { builtinGlobals: false }],
+        'ts/no-use-before-define': ['error', { classes: false, functions: false, variables: true }],
+        'ts/no-useless-constructor': 'off', // constructor parameters property is useful
+      },
+    },
     ...typeAwareRules,
+    {
+      name: 'sj-distributor/typescript/overrides',
+      files,
+      rules: overrides,
+    },
   ];
 }
