@@ -7,7 +7,8 @@ The ESLint configuration for the SJ Distributor team, based on the latest ESLint
 ## Features
 
 - **Modern**: Based on ESLint Flat Config, saying goodbye to `.eslintrc`.
-- **All-in-One**: Built-in rules for JavaScript, TypeScript, React, Hooks, Stylistic (Formatting), Unicorn, and more.
+- **All-in-One**: Built-in rules for JavaScript, TypeScript, React (with Hooks, Refresh & Extra), Stylistic (Formatting), Unicorn, and more.
+- **Simplified**: Aliased rule prefixes (e.g., `ts/` for TypeScript, `@stylistic/` for formatting).
 - **Type-Safe**: Complete TypeScript type definitions, no more guessing configurations.
 - **Zero-Config**: Enables best practices by default.
 - **Flexible**: Easy customization and rule overrides via a simple API.
@@ -75,7 +76,7 @@ export default avenger({
     files: ['**/*.ts', '**/*.tsx'], // Scan only specific files
     tsconfigPath: 'tsconfig.json', // Enable type-aware linting
     overrides: {
-      '@typescript-eslint/no-explicit-any': 'error', // Override specific TS rules
+      'ts/no-explicit-any': 'error', // Override specific TS rules (prefix: ts/)
     },
   },
 
@@ -84,7 +85,7 @@ export default avenger({
     files: ['**/*.tsx'], 
     typescript: true, // Enable TS support for React (defaults to global TS toggle)
     overrides: {
-      'react/prop-types': 'off',
+      'react-hooks/exhaustive-deps': 'warn',
     },
   },
 
@@ -144,7 +145,7 @@ export default avenger(
     files: ['test/**/*.ts', '**/*.test.ts'],
     rules: {
       'no-console': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
+      'ts/no-explicit-any': 'off',
     },
   },
   

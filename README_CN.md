@@ -7,7 +7,8 @@ SJ Distributor 团队专用的 ESLint 配置，基于最新的 ESLint Flat Confi
 ## 特性
 
 - **现代化**: 基于 ESLint Flat Config，摒弃旧的 `.eslintrc`
-- **全能**: 内置 JavaScript, TypeScript, React, Hooks, Stylistic (格式化), Unicorn 等规则
+- **全能**: 内置 JavaScript, TypeScript, React (含 Hooks, Refresh & Extra), Stylistic (格式化), Unicorn 等规则
+- **简化**: 规则前缀已简化别名 (例如 TypeScript 使用 `ts/`, 格式化使用 `@stylistic/`)
 - **强类型**: 提供完整的 TypeScript 类型提示，编写配置不再盲猜
 - **零配置**: 默认启用最佳实践，无需繁琐配置
 - **灵活**: 支持通过简单的 API 进行自定义和规则覆盖
@@ -75,7 +76,7 @@ export default avenger({
     files: ['**/*.ts', '**/*.tsx'], // 仅扫描特定文件
     tsconfigPath: 'tsconfig.json', // 启用类型感知 Lint
     overrides: {
-      '@typescript-eslint/no-explicit-any': 'error', // 仅覆盖 TS 模块的特定规则
+      'ts/no-explicit-any': 'error', // 仅覆盖 TS 模块的特定规则 (前缀: ts/)
     },
   },
 
@@ -84,7 +85,7 @@ export default avenger({
     files: ['**/*.tsx'], 
     typescript: true, // 启用 React 的 TS 支持 (默认跟随全局 TS 开关)
     overrides: {
-      'react/prop-types': 'off', // 仅覆盖 React 模块的特定规则
+      'react-hooks/exhaustive-deps': 'warn',
     },
   },
 
@@ -144,7 +145,7 @@ export default avenger(
     files: ['test/**/*.ts', '**/*.test.ts'],
     rules: {
       'no-console': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
+      'ts/no-explicit-any': 'off',
     },
   },
   
