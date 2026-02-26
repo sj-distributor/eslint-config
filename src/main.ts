@@ -1,75 +1,56 @@
-import type { Linter } from 'eslint';
-import { FlatConfigComposer } from 'eslint-flat-config-utils';
-import { isPackageExists } from 'local-pkg';
+import { ignores, javascript, react, stylistic, typescript, unicorn } from './configs';
+import type { AvengerOptions, UserConfig } from './types';
 
-import { ignores, importX, react, stylistic, typescript, javascript } from './configs';
-import type { ConfigNames } from './eslintype';
-import type { Awaitable, IOptionsConfig, EslintFlatConfigItem } from './types';
-import { getOverrides, resolveSubOptions } from './utils';
-
-export const avenger = (
-  options: IOptionsConfig & Omit<EslintFlatConfigItem, 'files'> = {},
-  ...customCongis: Awaitable<EslintFlatConfigItem | EslintFlatConfigItem[] | FlatConfigComposer<any, any> | Linter.Config[]>[]
-): FlatConfigComposer<EslintFlatConfigItem, ConfigNames> => {
+export async function avenger(
+  options: AvengerOptions = {},
+  ...userConfigs: UserConfig[]
+): Promise<UserConfig[]> {
   const {
-    typescript: enableTypeScript = isPackageExists('typescript'),
-    stylistic: enableStylistic = true,
     react: enableReact = false,
-    reactnative: enableReactNative = false,
-    ignores: customIgnoresConfig,
+    typescript: enableTypescript = true,
+    stylistic: enableStylistic = true,
+    unicorn: enableUnicorn = true,
+    ignores: customIgnores = [],
   } = options;
 
-  const stylisticOptions = options.stylistic === false
-    ? false
-    : typeof enableStylistic === 'object'
-      ? enableStylistic
-      : {};
+  const configs: UserConfig[] = [];
 
-  const configs: Awaitable<EslintFlatConfigItem[]>[] = [];
+  // 1. Ignores
+  configs.push(...ignores(customIgnores) as UserConfig[]);
 
-  const typescriptOptions = resolveSubOptions(options, 'typescript');
-  const tsconfigPath = 'tsconfigPath' in typescriptOptions ? typescriptOptions.tsconfigPath : undefined;
+  // 2. JavaScript (always enabled)
+  configs.push(...(await javascript()) as UserConfig[]);
 
-  // Configurations enabled by default
-  configs.push(
-    ignores(customIgnoresConfig),
-    javascript({
-      overrides: getOverrides(options, 'javascript'),
-    }),
-    importX(),
-  );
-
-  if (enableTypeScript) {
-    configs.push(
-      typescript({
-        ...typescriptOptions,
-        overrides: getOverrides(options, 'typescript'),
-      }),
-    );
+  // 3. TypeScript
+  if (enableTypescript) {
+    const tsOptions = typeof enableTypescript === 'object' ? enableTypescript : {};
+    configs.push(...(await typescript(tsOptions)) as UserConfig[]);
   }
 
-  if (stylisticOptions) {
-    configs.push(stylistic({
-      ...stylisticOptions,
-      overrides: getOverrides(options, 'stylistic'),
-    }));
-  }
-
+  // 4. React
   if (enableReact) {
-    configs.push(react({
-      ...typescriptOptions,
-      overrides: getOverrides(options, 'react'),
-      tsconfigPath,
-      reactnative: !!enableReactNative,
-    }));
+    const reactOptions = typeof enableReact === 'object' ? enableReact : {};
+    if (enableTypescript && reactOptions.typescript === undefined) {
+      reactOptions.typescript = true;
+    }
+    configs.push(...(await react(reactOptions)) as UserConfig[]);
   }
 
-  let flatConfigs = new FlatConfigComposer<EslintFlatConfigItem, ConfigNames>();
+  // 5. Stylistic
+  if (enableStylistic) {
+    const stylisticOptions = typeof enableStylistic === 'object' ? enableStylistic : {};
+    configs.push(...stylistic(stylisticOptions) as UserConfig[]);
+  }
 
-  flatConfigs = flatConfigs.append(
-    ...configs,
-    ...customCongis as any,
-  );
+  // 6. Unicorn
+  if (enableUnicorn) {
+    configs.push(...unicorn() as UserConfig[]);
+  }
 
-  return flatConfigs;
-};
+  // 7. User overrides
+  if (userConfigs.length > 0) {
+    configs.push(...userConfigs);
+  }
+
+  return configs;
+}

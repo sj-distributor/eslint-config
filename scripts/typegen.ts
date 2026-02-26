@@ -7,6 +7,7 @@ import { ignores, javascript, react, stylistic, typescript, unicorn } from '../s
 export async function generateTypeDefinitions() {
   const configs: Linter.Config[] = [
     {
+      name: 'eslint/builtin',
       plugins: {
         '': {
           rules: Object.fromEntries(builtinRules.entries()),

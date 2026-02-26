@@ -1,58 +1,53 @@
-import type { EslintFlatConfigItem, IOptionsOverrides, IStylisticConfig } from '../types';
-import { loadModule } from '../utils';
+import stylisticPlugin from '@stylistic/eslint-plugin';
+import type { Linter } from 'eslint';
+import type { Overrides } from '../types';
 
-export const DEFAULT_CONFIG: IStylisticConfig = {
-  jsx: true,
-  semi: true,
-  indent: 2,
-  quotes: 'single',
-};
+export interface StylisticOptions {
+  indent?: number | 'tab';
+  quotes?: 'single' | 'double';
+  semi?: boolean;
+  jsx?: boolean;
+  overrides?: Overrides;
+}
 
-export const stylistic = async (
-  options: IStylisticConfig & IOptionsOverrides = {},
-): Promise<EslintFlatConfigItem[]> => {
+export function stylistic(
+  options: StylisticOptions = {},
+): Linter.Config[] {
   const {
-    jsx,
-    semi,
-    quotes,
-    indent,
+    indent = 2,
+    quotes = 'single',
+    semi = true,
+    jsx = true,
     overrides = {},
-  } = {
-    ...DEFAULT_CONFIG,
-    ...options,
-  };
+  } = options;
 
-  const stylisticPlugin = await loadModule(import('@stylistic/eslint-plugin'));
-
-  const stylisticConfig = stylisticPlugin.configs.customize({
+  const config = stylisticPlugin.configs.customize({
     indent,
-    jsx,
-    pluginName: '@stylistic',
     quotes,
     semi,
+    jsx,
   });
 
   return [
     {
-      name: 'sj-distributor/stylistic/rules',
+      name: 'sj-distributor/stylistic',
       plugins: {
         '@stylistic': stylisticPlugin,
       },
       rules: {
-        ...stylisticConfig.rules,
+        ...config.rules,
 
+        // User specific preferences
         '@stylistic/object-curly-spacing': ['error', 'always'],
-        '@stylistic/jsx-closing-bracket-location': ['error', 'line-aligned'],
-        '@stylistic/quotes': ['error', 'single'],
+        '@stylistic/jsx-closing-bracket-location': ['error', 'tag-aligned'],
         '@stylistic/comma-dangle': ['error', 'always-multiline'],
         '@stylistic/arrow-parens': ['error', 'as-needed'],
-        '@stylistic/generator-star-spacing': ['error', { before: false, after: true }],
-        '@stylistic/yield-star-spacing': ['error', { before: false, after: true }],
 
-        'curly': ['error', 'all'],
+        // JSX Quotes
+        '@stylistic/jsx-quotes': ['error', 'prefer-double'],
 
         ...overrides,
       },
     },
   ];
-};
+}

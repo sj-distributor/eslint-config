@@ -1,283 +1,209 @@
 # @sj-distributor/eslint-config
 
-[![npm version](https://img.shields.io/npm/v/@sj-distributor/eslint-config.svg)](https://www.npmjs.com/package/@sj-distributor/eslint-config)
-[![license](https://img.shields.io/npm/l/@sj-distributor/eslint-config.svg)](https://github.com/sj-distributor/eslint-config/blob/main/LICENSE)
+SJ Distributor 团队专用的 ESLint 配置，基于最新的 ESLint Flat Config (v9+)，提供开箱即用的 React + TypeScript 最佳实践。
 
-🚀 **SJ Distributor Avenger Team ESLint 配置** - 一个现代化、有主见的 ESLint 配置，适用于 JavaScript、TypeScript 和 React 项目。
+[English Documentation](./README.md)
 
-> [!WARNING]
-> 需要 ESLint 版本 **v9.18.0** 或更高。
+## 特性
 
-## ✨ 特性
+- **现代化**: 基于 ESLint Flat Config，摒弃旧的 `.eslintrc`
+- **全能**: 内置 JavaScript, TypeScript, React, Hooks, Stylistic (格式化), Unicorn 等规则
+- **强类型**: 提供完整的 TypeScript 类型提示，编写配置不再盲猜
+- **零配置**: 默认启用最佳实践，无需繁琐配置
+- **灵活**: 支持通过简单的 API 进行自定义和规则覆盖
 
-- 🎯 **零配置** - 开箱即用，具有合理的默认设置
-- 🔧 **高度可配置** - 自定义规则以适应您的项目需求
-- 📦 **模块化设计** - 仅启用您需要的功能
-- 🚀 **现代标准** - 为 ESLint v9+ 扁平配置而构建
-- 🎨 **代码风格** - 与 @stylistic 集成，确保一致的格式化
-- ⚡ **性能优化** - 通过智能默认设置优化快速检查
-- 🔍 **类型感知** - 完整的 TypeScript 支持和类型感知规则
-- ⚛️ **React 就绪** - 全面的 React 和 React Native 支持
-
-## 📦 安装
+## 安装
 
 ```bash
-# 使用 pnpm（推荐）
 pnpm add -D eslint @sj-distributor/eslint-config
+```
 
-# 使用 npm
+或者使用 npm/yarn:
+
+```bash
 npm install -D eslint @sj-distributor/eslint-config
-
-# 使用 yarn
+# 或
 yarn add -D eslint @sj-distributor/eslint-config
 ```
 
-## 🚀 快速开始
+> 注意：本项目依赖 ESLint v9+ 和 TypeScript v5+。
 
-### 基础用法
+## 快速开始
 
-在项目根目录创建 `eslint.config.mjs` 文件：
+在项目根目录创建 `eslint.config.ts` 文件：
 
-```js
-// eslint.config.mjs
+```typescript
 import { avenger } from '@sj-distributor/eslint-config';
 
 export default avenger();
 ```
 
-### TypeScript 项目
+> **提示**：如果您使用 `.ts` 配置文件，请确保您的开发环境支持加载 TS 模块（如安装 `jiti` 或 `tsx`）。VS Code ESLint 插件通常开箱即用，但可能需要几秒钟来初始化 TypeScript 运行时。
 
-```js
-// eslint.config.mjs
-import { avenger } from '@sj-distributor/eslint-config';
+这就完了！你现在已经拥有了完整的 Lint 规则。
 
+## 配置选项
+
+`avenger` 函数接收两个参数：
+
+1.  **Options**: 功能开关和基础配置
+2.  **UserConfigs**: (可选) 用户自定义覆盖配置，支持任意多个
+
+### 基础配置 (Options)
+
+```typescript
 export default avenger({
-  typescript: true,
-  stylistic: true,
+  // 启用/禁用特定模块 (默认全部启用)
+  react: true,       // 包含 React, Hooks, Refresh
+  typescript: true,  // 包含 TS 推荐规则
+  stylistic: true,   // 包含代码风格和格式化规则
+  unicorn: true,     // 包含 Unicorn 强力规则
+
+  // 自定义忽略文件 (合并到默认忽略列表)
+  ignores: ['**/temp', 'src/legacy/**/*.ts'],
 });
 ```
 
-### React 项目
+### 高级配置
 
-```js
-// eslint.config.mjs
-import { avenger } from '@sj-distributor/eslint-config';
+某些模块支持更细粒度的配置，包括模块特定的规则覆盖：
 
+```typescript
 export default avenger({
-  typescript: true,
-  react: true,
-  stylistic: {
-    jsx: true,
-    quotes: 'single',
-    semi: true,
-  },
-});
-```
-
-### React Native 项目
-
-```js
-// eslint.config.mjs
-import { avenger } from '@sj-distributor/eslint-config';
-
-export default avenger({
-  typescript: true,
-  react: true,
-  reactnative: true,
-});
-```
-
-## ⚙️ 配置选项
-
-### 核心选项
-
-```js
-avenger({
-  // 启用 TypeScript 支持（自动检测）
-  typescript: true,
-  
-  // 启用样式格式化规则
-  stylistic: {
-    jsx: true,        // 启用 JSX 格式化
-    quotes: 'single', // 'single' | 'double'
-    semi: true,       // 启用分号
-    indent: 2,        // 缩进大小
-  },
-  
-  // 启用 React 支持
-  react: true,
-  
-  // 启用 React Native 支持
-  reactnative: true,
-  
-  // 自定义忽略模式
-  ignores: {
-    customIgnores: ['custom-dir/**'],
-  },
-});
-```
-
-### TypeScript 配置
-
-```js
-avenger({
+  // TypeScript 配置
   typescript: {
-    // tsconfig.json 路径，用于类型感知规则
-    tsconfigPath: './tsconfig.json',
-    
-    // 自定义解析器选项
-    parserOptions: {
-      project: './tsconfig.json',
-    },
-    
-    // 覆盖特定规则
+    files: ['**/*.ts', '**/*.tsx'], // 仅扫描特定文件
+    tsconfigPath: 'tsconfig.json', // 启用类型感知 Lint
     overrides: {
-      '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/no-explicit-any': 'error', // 仅覆盖 TS 模块的特定规则
+    },
+  },
+
+  // React 配置
+  react: {
+    files: ['**/*.tsx'], 
+    typescript: true, // 启用 React 的 TS 支持 (默认跟随全局 TS 开关)
+    overrides: {
+      'react/prop-types': 'off', // 仅覆盖 React 模块的特定规则
+    },
+  },
+
+  // Stylistic 配置 (替代 Prettier)
+  stylistic: {
+    indent: 2,           // 缩进空格数
+    quotes: 'single',    // 引号类型: 'single' | 'double'
+    semi: true,          // 是否使用分号
+    jsx: true,           // 是否启用 JSX 格式化
+    
+    // 覆盖具体的 Stylistic 规则
+    overrides: {
+      '@stylistic/jsx-max-props-per-line': ['error', { maximum: 1 }],
     },
   },
 });
 ```
 
-### 高级用法
+## 规则覆盖 (Override)
 
-```js
-import { avenger } from '@sj-distributor/eslint-config';
+你有两种方式来覆盖规则：
 
+1.  **模块特定覆盖 (Module-Specific)**: 在每个模块配置中使用 `overrides` 属性（如上所示）。
+2.  **全局覆盖 (Global)**: 将标准的 ESLint Flat Config 对象作为 `avenger` 函数的后续参数传入。
+
+**优先级顺序**：用户全局覆盖 > 模块特定覆盖 > 项目默认值 > 官方推荐规则。
+
+### 示例: 全局覆盖
+
+```typescript
 export default avenger(
+  { react: true, typescript: true },
+  
+  // 用户自定义配置对象
   {
-    typescript: true,
-    react: true,
-    stylistic: true,
-  },
-  // 添加自定义配置
-  {
-    files: ['**/*.test.ts'],
     rules: {
+      // 全局关闭 console 警告
       'no-console': 'off',
+      
+      // 修改 React Hooks 规则
+      'react-hooks/exhaustive-deps': 'warn',
     },
-  },
-  // 添加更多自定义配置...
+  }
 );
 ```
 
-## 🗂️ 配置架构
+### 示例: 针对特定文件覆盖
 
-我们的配置采用扁平化架构，所有配置文件直接存放在 `src/configs/` 目录下：
-
-### 📁 配置文件结构
-
-```
-src/configs/
-├── ignores.ts     # 默认忽略模式
-├── javascript.ts  # JavaScript 基础规则
-├── typescript.ts  # TypeScript 语言支持
-├── react.ts       # React 框架规则
-├── import-x.ts    # 导入/导出规则
-├── stylistic.ts   # 代码风格规则
-└── index.ts       # 统一导出
-```
-
-### 🎯 添加新配置
-
-当您需要添加新配置时，请遵循以下步骤：
-
-1. **创建配置文件** - 在 `src/configs/` 目录下创建新的 `.ts` 文件
-2. **实现配置函数** - 导出符合标准的配置函数
-3. **更新索引文件** - 在 `src/configs/index.ts` 中添加导出
-4. **更新主配置** - 在 `src/main.ts` 中集成新配置
-5. **更新文档** - 在 README 中添加使用说明
-
-### 📝 配置文件命名规范
-
-- 使用小写字母和连字符：`kebab-case.ts`
-- 文件名应简洁明了，反映配置用途
-- 每个配置文件应导出一个默认函数
-- 在 `index.ts` 中重新导出
-
-### 💡 配置示例
+利用 Flat Config 的 `files` 属性，只对部分文件应用规则：
 
 ```typescript
-// src/configs/new-config.ts
-import type { EslintFlatConfigItem } from '../types';
-
-export const newConfig = async (): Promise<EslintFlatConfigItem[]> => {
-  return [
-    {
-      name: 'sj-distributor/new-config/rules',
-      rules: {
-        // 配置规则
-      },
+export default avenger(
+  {}, // 使用默认配置
+  
+  // 针对测试文件的特殊规则
+  {
+    files: ['test/**/*.ts', '**/*.test.ts'],
+    rules: {
+      'no-console': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
     },
-  ];
-};
-
-export default newConfig;
+  },
+  
+  // 针对旧代码的宽松规则
+  {
+    files: ['src/legacy/**/*.js'],
+    rules: {
+      'unicorn/filename-case': 'off',
+    },
+  }
+);
 ```
 
-## 🎯 规则理念
+## 类型感知 Lint (Type-Aware Linting)
 
-我们的配置遵循以下原则：
+如果你想启用强大的类型感知规则（例如检查未处理的 Promise 或误用的 Promise），请在 typescript 配置中提供 `tsconfigPath` 选项：
 
-- **🛡️ 安全第一** - 防止常见错误和运行时错误
-- **📖 可读性** - 强制执行一致且可读的代码风格
-- **🚀 现代实践** - 鼓励现代 JavaScript/TypeScript 模式
-- **⚡ 性能** - 避免性能反模式
-- **🔧 灵活性** - 易于自定义和扩展
+```typescript
+export default avenger({
+  typescript: {
+    tsconfigPath: 'tsconfig.json',
+  },
+});
+```
 
-## 🔧 开发
+这将自动启用一系列严格的类型检查规则。请注意，这可能会略微增加 Lint 的运行时间。
+
+## VS Code 集成
+
+为了获得最佳的开发体验（自动修复、高亮），请确保安装 [VS Code ESLint 扩展](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)，并在项目 `.vscode/settings.json` 中添加以下配置：
+
+```json
+{
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ]
+}
+```
+
+## 常见问题
+
+### 为什么不需要 Prettier？
+本配置集成了 `@stylistic/eslint-plugin`，它提供了一套完整的代码格式化规则（缩进、空格、逗号等），完全可以替代 Prettier。这样做的好处是统一了工具链，避免了 ESLint 和 Prettier 之间的冲突。
+
+### 如何查看当前生效的所有规则？
+你可以使用 [eslint-config-inspector](https://github.com/eslint/config-inspector) 来可视化查看最终生成的配置：
 
 ```bash
-# 安装依赖
-pnpm install
-
-# 构建包
-pnpm build
-
-# 运行检查
-pnpm lint
-
-# 修复检查问题
-pnpm lint:fix
-
-# 类型检查
-pnpm typecheck
-
-# 生成 ESLint 类型
-pnpm eslint:typegen
-
-# 启动配置检查器
-pnpm dev
+npx @eslint/config-inspector
 ```
 
-## 📚 迁移指南
+## License
 
-### 从 ESLint v8 迁移
-
-如果您正在从 ESLint v8 迁移，您需要：
-
-1. 更新到 ESLint v9+
-2. 将您的 `.eslintrc.*` 转换为 `eslint.config.mjs`
-3. 更新您的配置格式
-
-```js
-// 旧版本 (.eslintrc.js)
-module.exports = {
-  extends: ['@sj-distributor/eslint-config'],
-};
-
-// 新版本 (eslint.config.mjs)
-import { avenger } from '@sj-distributor/eslint-config';
-export default avenger();
-```
-
-## 📄 许可证
-
-[MIT](./LICENSE) © 2024 SJ Distributor Avenger Team
-
-## 🙏 致谢
-
-此配置受到以下项目的启发和构建：
-- [@antfu/eslint-config](https://github.com/antfu/eslint-config)
-- [ESLint Stylistic](https://eslint.style/)
-- [TypeScript ESLint](https://typescript-eslint.io/)
-- [ESLint React](https://github.com/Rel1cx/eslint-react)
+MIT
