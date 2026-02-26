@@ -2,6 +2,7 @@ import reactPlugin from '@eslint-react/eslint-plugin';
 import type { Linter } from 'eslint';
 import hooksPlugin from 'eslint-plugin-react-hooks';
 import refreshPlugin from 'eslint-plugin-react-refresh';
+import type { Overrides } from '../types';
 
 export interface ReactOptions {
   /**
@@ -19,7 +20,7 @@ export interface ReactOptions {
   /**
    * Override React rules.
    */
-  overrides?: Linter.Config['rules'];
+  overrides?: Overrides;
 }
 
 export async function react(

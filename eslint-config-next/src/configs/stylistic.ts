@@ -1,12 +1,13 @@
 import stylisticPlugin from '@stylistic/eslint-plugin';
 import type { Linter } from 'eslint';
+import type { Overrides } from '../types';
 
 export interface StylisticOptions {
   indent?: number | 'tab';
   quotes?: 'single' | 'double';
   semi?: boolean;
   jsx?: boolean;
-  overrides?: Linter.Config['rules'];
+  overrides?: Overrides;
 }
 
 export function stylistic(

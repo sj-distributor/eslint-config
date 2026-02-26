@@ -5,6 +5,8 @@ import type { RuleOptions } from './typegen';
 
 export type UserConfig = Linter.Config<Linter.RulesRecord & RuleOptions>;
 
+export type Overrides = Linter.Config<Linter.RulesRecord & RuleOptions>['rules'];
+
 export interface AvengerOptions {
   /**
    * Enable React support.
@@ -16,7 +18,11 @@ export interface AvengerOptions {
    * Enable TypeScript support.
    * @default true
    */
-  typescript?: boolean | { files?: string[] };
+  typescript?: boolean | {
+    files?: string[];
+    overrides?: Overrides;
+    tsconfigPath?: string;
+  };
 
   /**
    * Enable stylistic rules.
