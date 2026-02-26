@@ -11,6 +11,8 @@
       "require": "./dist/index.cjs"
     }
   },
+  "author": "Simon Feng",
+  "license": "MIT",
   "files": [
     "dist"
   ],
@@ -22,10 +24,11 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsup",
+    "build": "pnpm typegen && tsup",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "typegen": "tsx scripts/typegen.ts"
+    "typegen": "tsx scripts/typegen.ts",
+    "release": "pnpm build && bumpp && pnpm publish"
   },
   "peerDependencies": {
     "eslint": "^10.0.0",
