@@ -107,7 +107,7 @@ export async function react(
         ...pluginReactRefresh.configs.recommended.rules,
 
         // recommended rules from eslint-plugin-react
-        '@eslint-react/set-state-in-effect': 'warn',
+        '@eslint-react/hooks-extra/no-direct-set-state-in-use-effect': 'warn',
       },
     },
     {

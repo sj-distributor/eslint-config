@@ -29,8 +29,8 @@
     "releaselog": "npx changelogithub"
   },
   "dependencies": {
-    "@eslint-react/eslint-plugin": "^3.0.0",
-    "@eslint/js": "^10.0.1",
+    "@eslint-react/eslint-plugin": "^2.13.0",
+    "@eslint/js": "^9.39.4",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@typescript-eslint/eslint-plugin": "^8.57.1",
     "@typescript-eslint/parser": "^8.57.1",
@@ -46,7 +46,7 @@
   "devDependencies": {
     "@react-native/eslint-config": "^0.84.1",
     "@types/node": "^25.3.0",
-    "eslint": "^10.0.3",
+    "eslint": "^9.39.4",
     "eslint-typegen": "^2.3.1",
     "jiti": "^2.6.1",
     "release-it": "^19.2.4",
@@ -55,7 +55,7 @@
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
-    "eslint": "^10.0.0",
+    "eslint": "^9.39.4",
     "typescript": "^5.0.0"
   },
   "peerDependenciesMeta": {
