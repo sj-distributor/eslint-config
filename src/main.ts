@@ -1,4 +1,4 @@
-import { ignores, javascript, react, stylistic, typescript, unicorn } from './configs';
+import { ignores, javascript, react, reactNative, stylistic, typescript, unicorn } from './configs';
 import type { AvengerOptions, UserConfig } from './types';
 
 export async function avenger(
@@ -7,6 +7,7 @@ export async function avenger(
 ): Promise<UserConfig[]> {
   const {
     react: enableReact = false,
+    reactNative: enableReactNative = false,
     typescript: enableTypescript = true,
     stylistic: enableStylistic = true,
     unicorn: enableUnicorn = true,
@@ -33,21 +34,30 @@ export async function avenger(
     if (enableTypescript && reactOptions.typescript === undefined) {
       reactOptions.typescript = true;
     }
+    if (enableReactNative && reactOptions.reactNative === undefined) {
+      reactOptions.reactNative = true;
+    }
     configs.push(...(await react(reactOptions)));
   }
 
-  // 5. Stylistic
+  // 5. React Native
+  if (enableReactNative) {
+    const reactNativeOptions = typeof enableReactNative === 'object' ? enableReactNative : {};
+    configs.push(...(await reactNative(reactNativeOptions)));
+  }
+
+  // 6. Stylistic
   if (enableStylistic) {
     const stylisticOptions = typeof enableStylistic === 'object' ? enableStylistic : {};
     configs.push(...stylistic(stylisticOptions));
   }
 
-  // 6. Unicorn
+  // 7. Unicorn
   if (enableUnicorn) {
     configs.push(...unicorn());
   }
 
-  // 7. User overrides
+  // 8. User overrides
   if (userConfigs.length > 0) {
     configs.push(...userConfigs);
   }

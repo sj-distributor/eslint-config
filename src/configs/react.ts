@@ -16,6 +16,12 @@ export interface ReactOptions {
   typescript?: boolean;
 
   /**
+   * Enable React Native support.
+   * @default false
+   */
+  reactNative?: boolean;
+
+  /**
    * Override React rules.
    */
   overrides?: Overrides;
@@ -27,6 +33,7 @@ export async function react(
   const {
     files = ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
     typescript = true,
+    reactNative = false,
     overrides = {},
   } = options;
 
@@ -40,7 +47,26 @@ export async function react(
     interopDefault(import('eslint-plugin-react-refresh')),
   ] as const);
 
+  // eslint-disable-next-line ts/no-explicit-any
   const plugins = (pluginReact.configs.all as any).plugins;
+
+  let baseRules = {
+    // recommended rules from @eslint-react/eslint-plugin
+    ...pluginReact.configs.recommended.rules,
+    ...(typescript ? pluginReact.configs['recommended-typescript'].rules : {}),
+  };
+
+  if (reactNative) {
+    // eslint-disable-next-line ts/no-explicit-any
+    const filteredRules: Record<string, any> = {};
+    for (const key of Object.keys(baseRules)) {
+      if (!key.startsWith('@eslint-react/dom/') && !key.startsWith('@eslint-react/web-api/')) {
+        // eslint-disable-next-line ts/no-explicit-any
+        filteredRules[key] = (baseRules as any)[key];
+      }
+    }
+    baseRules = filteredRules;
+  }
 
   return [
     {
@@ -49,11 +75,15 @@ export async function react(
         'react-hooks': pluginReactHooks,
         'react-refresh': pluginReactRefresh,
         '@eslint-react': plugins['@eslint-react'],
-        '@eslint-react/dom': plugins['@eslint-react/dom'],
+        ...(reactNative
+          ? {}
+          : {
+              '@eslint-react/dom': plugins['@eslint-react/dom'],
+              '@eslint-react/web-api': plugins['@eslint-react/web-api'],
+            }),
         '@eslint-react/hooks-extra': plugins['@eslint-react/hooks-extra'],
         '@eslint-react/naming-convention': plugins['@eslint-react/naming-convention'],
         '@eslint-react/rsc': plugins['@eslint-react/rsc'],
-        '@eslint-react/web-api': plugins['@eslint-react/web-api'],
       },
     },
     {
@@ -68,9 +98,7 @@ export async function react(
         sourceType: 'module',
       },
       rules: {
-        // recommended rules from @eslint-react/eslint-plugin
-        ...pluginReact.configs.recommended.rules,
-        ...(typescript ? pluginReact.configs['recommended-typescript'].rules : {}),
+        ...baseRules,
 
         // react-hooks
         ...pluginReactHooks.configs.recommended.rules,

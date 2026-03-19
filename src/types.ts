@@ -1,5 +1,6 @@
 import type { Linter } from 'eslint';
 import type { ReactOptions } from './configs/react';
+import type { ReactNativeOptions } from './configs/react-native';
 import type { StylisticOptions } from './configs/stylistic';
 import type { RuleOptions } from './typegen';
 
@@ -35,6 +36,12 @@ export interface AvengerOptions {
    * @default false
    */
   react?: boolean | ReactOptions;
+
+  /**
+   * Enable React Native support.
+   * @default false
+   */
+  reactNative?: boolean | ReactNativeOptions;
 
   /**
    * Enable TypeScript support.

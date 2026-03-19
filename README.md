@@ -1,6 +1,6 @@
 # @sj-distributor/eslint-config
 
-The ESLint configuration for the SJ Distributor team, based on the latest ESLint Flat Config (v9+), offering out-of-the-box best practices for React + TypeScript.
+Based on the latest ESLint Flat Config (v9+), offering out-of-the-box best practices for React + TypeScript.
 
 [中文文档](./README_CN.md)
 

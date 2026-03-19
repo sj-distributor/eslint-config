@@ -1,6 +1,6 @@
 # @sj-distributor/eslint-config
 
-SJ Distributor 团队专用的 ESLint 配置，基于最新的 ESLint Flat Config (v9+)，提供开箱即用的 React + TypeScript 最佳实践。
+基于最新的 ESLint Flat Config (v9+)，提供开箱即用的 React + TypeScript 最佳实践。
 
 [English Documentation](./README.md)
 
