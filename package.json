@@ -1,6 +1,6 @@
 {
   "name": "@sj-distributor/eslint-config",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "SJ Distributor Avenger Team ESLint Config",
   "keywords": [
     "eslint",
