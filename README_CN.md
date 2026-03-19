@@ -184,6 +184,8 @@ export default avenger({
     "source.fixAll.eslint": "explicit",
     "source.organizeImports": "never"
   },
+  "prettier.enable": false,
+  "eslint.useFlatConfig": true,
   "eslint.validate": [
     "javascript",
     "javascriptreact",

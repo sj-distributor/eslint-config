@@ -184,6 +184,8 @@ For the best development experience (auto-fix, highlighting), install the [VS Co
     "source.fixAll.eslint": "explicit",
     "source.organizeImports": "never"
   },
+  "prettier.enable": false,
+  "eslint.useFlatConfig": true,
   "eslint.validate": [
     "javascript",
     "javascriptreact",
