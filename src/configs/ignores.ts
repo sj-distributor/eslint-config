@@ -60,6 +60,7 @@ const DEFAULT_IGNORES = [
   '**/.yarn',
   '**/vite.config.*.timestamp-*',
 
+  '**/.eslint-config-inspector',
   '**/CHANGELOG*.md',
   '**/*.min.*',
   '**/LICENSE*',

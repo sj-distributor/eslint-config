@@ -78,12 +78,12 @@ export async function react(
         ...(reactNative
           ? {}
           : {
-              '@eslint-react/dom': plugins['@eslint-react/dom'],
-              '@eslint-react/web-api': plugins['@eslint-react/web-api'],
+              ...(plugins['@eslint-react/dom'] ? { '@eslint-react/dom': plugins['@eslint-react/dom'] } : {}),
+              ...(plugins['@eslint-react/web-api'] ? { '@eslint-react/web-api': plugins['@eslint-react/web-api'] } : {}),
             }),
-        '@eslint-react/hooks-extra': plugins['@eslint-react/hooks-extra'],
-        '@eslint-react/naming-convention': plugins['@eslint-react/naming-convention'],
-        '@eslint-react/rsc': plugins['@eslint-react/rsc'],
+        ...(plugins['@eslint-react/hooks-extra'] ? { '@eslint-react/hooks-extra': plugins['@eslint-react/hooks-extra'] } : {}),
+        ...(plugins['@eslint-react/naming-convention'] ? { '@eslint-react/naming-convention': plugins['@eslint-react/naming-convention'] } : {}),
+        ...(plugins['@eslint-react/rsc'] ? { '@eslint-react/rsc': plugins['@eslint-react/rsc'] } : {}),
       },
     },
     {
@@ -106,8 +106,8 @@ export async function react(
         // react-refresh
         ...pluginReactRefresh.configs.recommended.rules,
 
-        // recommended rules from eslint-plugin-react-hooks-extra https://eslint-react.xyz/docs/rules/overview#hooks-extra-rules
-        '@eslint-react/hooks-extra/no-direct-set-state-in-use-effect': 'warn',
+        // recommended rules from eslint-plugin-react
+        '@eslint-react/set-state-in-effect': 'warn',
       },
     },
     {
