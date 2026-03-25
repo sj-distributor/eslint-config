@@ -1,4 +1,4 @@
-import { ignores, javascript, react, reactNative, stylistic, typescript, unicorn } from './configs';
+import { ignores, imports, javascript, react, reactNative, stylistic, typescript, unicorn } from './configs';
 import type { AvengerOptions, UserConfig } from './types';
 
 export async function avenger(
@@ -11,6 +11,7 @@ export async function avenger(
     typescript: enableTypescript = true,
     stylistic: enableStylistic = true,
     unicorn: enableUnicorn = true,
+    imports: enableImports = true,
     ignores: customIgnores = [],
   } = options;
 
@@ -57,7 +58,13 @@ export async function avenger(
     configs.push(...unicorn());
   }
 
-  // 8. User overrides
+  // 8. Imports
+  if (enableImports) {
+    const importsOptions = typeof enableImports === 'object' ? enableImports : {};
+    configs.push(...imports(importsOptions));
+  }
+
+  // 9. User overrides
   if (userConfigs.length > 0) {
     configs.push(...userConfigs);
   }

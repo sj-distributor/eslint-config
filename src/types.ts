@@ -30,6 +30,11 @@ export type TypedFlatConfigItem = Omit<Linter.Config<Linter.RulesRecord & RuleOp
   rules?: Linter.Config<Linter.RulesRecord & RuleOptions>['rules'];
 };
 
+export interface ImportsOptions {
+  overrides?: Overrides;
+  stylistic?: boolean;
+}
+
 export interface AvengerOptions {
   /**
    * Enable React support.
@@ -64,6 +69,12 @@ export interface AvengerOptions {
    * @default true
    */
   unicorn?: boolean;
+
+  /**
+   * Enable imports rules.
+   * @default true
+   */
+  imports?: boolean | ImportsOptions;
 
   /**
    * Custom ignores.
