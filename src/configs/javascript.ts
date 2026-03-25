@@ -1,8 +1,7 @@
 import js from '@eslint/js';
-import type { TypedFlatConfigItem } from '../types';
+import type { TypedFlatConfigItem, Overrides } from '../types';
 import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
-import type { Overrides } from '../types';
 
 export async function javascript(
   options: {

@@ -1,6 +1,5 @@
 import stylisticPlugin from '@stylistic/eslint-plugin';
-import type { TypedFlatConfigItem } from '../types';
-import type { Overrides } from '../types';
+import type { TypedFlatConfigItem, Overrides } from '../types';
 
 export interface StylisticOptions {
   indent?: number | 'tab';
