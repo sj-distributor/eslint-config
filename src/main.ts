@@ -1,4 +1,4 @@
-import { ignores, javascript, react, reactNative, stylistic, typescript, unicorn } from './configs';
+import { ignores, importLiteConfig, javascript, react, reactNative, stylistic, typescript, unicorn } from './configs';
 import type { AvengerOptions, UserConfig } from './types';
 
 export async function avenger(
@@ -11,6 +11,7 @@ export async function avenger(
     typescript: enableTypescript = true,
     stylistic: enableStylistic = true,
     unicorn: enableUnicorn = true,
+    importLite: enableImportLite = true,
     ignores: customIgnores = [],
   } = options;
 
@@ -22,13 +23,19 @@ export async function avenger(
   // 2. JavaScript (always enabled)
   configs.push(...(await javascript()));
 
-  // 3. TypeScript
+  // 3. Import-lite
+  if (enableImportLite) {
+    const importLiteOptions = typeof enableImportLite === 'object' ? enableImportLite : {};
+    configs.push(...importLiteConfig(importLiteOptions));
+  }
+
+  // 4. TypeScript
   if (enableTypescript) {
     const tsOptions = typeof enableTypescript === 'object' ? enableTypescript : {};
     configs.push(...(await typescript(tsOptions)));
   }
 
-  // 4. React
+  // 5. React
   if (enableReact) {
     const reactOptions = typeof enableReact === 'object' ? enableReact : {};
     if (enableTypescript && reactOptions.typescript === undefined) {
@@ -40,24 +47,24 @@ export async function avenger(
     configs.push(...(await react(reactOptions)));
   }
 
-  // 5. React Native
+  // 6. React Native
   if (enableReactNative) {
     const reactNativeOptions = typeof enableReactNative === 'object' ? enableReactNative : {};
     configs.push(...(await reactNative(reactNativeOptions)));
   }
 
-  // 6. Stylistic
+  // 7. Stylistic
   if (enableStylistic) {
     const stylisticOptions = typeof enableStylistic === 'object' ? enableStylistic : {};
     configs.push(...stylistic(stylisticOptions));
   }
 
-  // 7. Unicorn
+  // 8. Unicorn
   if (enableUnicorn) {
     configs.push(...unicorn());
   }
 
-  // 8. User overrides
+  // 9. User overrides
   if (userConfigs.length > 0) {
     configs.push(...userConfigs);
   }

@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 import { flatConfigsToRulesDTS } from 'eslint-typegen/core';
 import { builtinRules } from 'eslint/use-at-your-own-risk';
 import type { Linter } from 'eslint';
-import { ignores, javascript, react, stylistic, typescript, unicorn } from '../src';
+import { ignores, importLiteConfig, javascript, react, stylistic, typescript, unicorn } from '../src';
 
 export async function generateTypeDefinitions() {
   const configs: Linter.Config[] = [
@@ -16,6 +16,7 @@ export async function generateTypeDefinitions() {
     },
     ...ignores(),
     ...(await javascript()),
+    ...importLiteConfig(),
     ...(await typescript()),
     ...(await react()),
     ...stylistic(),
