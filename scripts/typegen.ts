@@ -4,6 +4,11 @@ import { builtinRules } from 'eslint/use-at-your-own-risk';
 import type { Linter } from 'eslint';
 import { ignores, importLiteConfig, javascript, react, stylistic, typescript, unicorn } from '../src';
 
+generateTypeDefinitions().catch((err: unknown) => {
+  // eslint-disable-next-line no-console
+  console.error(err);
+});
+
 export async function generateTypeDefinitions() {
   const configs: Linter.Config[] = [
     {
@@ -36,5 +41,3 @@ export type ConfigNames = ${configNames.map(i => `'${i}'`).join(' | ')}
 
   await fs.writeFile('src/typegen.d.ts', dts);
 }
-
-generateTypeDefinitions().catch(console.error);
