@@ -1,3 +1,4 @@
+import process from 'node:process';
 import { interopDefault, renameRules } from '../utils';
 import type { Overrides, TypedFlatConfigItem } from '../types';
 

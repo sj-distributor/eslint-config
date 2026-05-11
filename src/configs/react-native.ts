@@ -1,5 +1,4 @@
-import type { TypedFlatConfigItem } from '../types';
-import type { Overrides } from '../types';
+import type { TypedFlatConfigItem, Overrides } from '../types';
 import { interopDefault } from '../utils';
 
 export interface ReactNativeOptions {

@@ -1,4 +1,5 @@
 import type { Linter } from 'eslint';
+import type { ImportLiteOptions } from './configs/import-lite';
 import type { ReactOptions } from './configs/react';
 import type { ReactNativeOptions } from './configs/react-native';
 import type { StylisticOptions } from './configs/stylistic';
@@ -58,6 +59,12 @@ export interface AvengerOptions {
    * @default true
    */
   stylistic?: boolean | StylisticOptions;
+
+  /**
+   * Enable import-lite rules.
+   * @default true
+   */
+  importLite?: boolean | ImportLiteOptions;
 
   /**
    * Enable unicorn rules.
