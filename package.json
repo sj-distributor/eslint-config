@@ -1,6 +1,6 @@
 {
   "name": "@sj-distributor/eslint-config",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "description": "SJ Distributor Avenger Team ESLint Config",
   "keywords": [
     "eslint",
@@ -36,6 +36,7 @@
     "@typescript-eslint/parser": "^8.57.1",
     "@typescript-eslint/type-utils": "^8.57.1",
     "@typescript-eslint/utils": "^8.57.1",
+    "eslint-plugin-import-lite": "^0.6.0",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "eslint-plugin-unicorn": "^63.0.0",
