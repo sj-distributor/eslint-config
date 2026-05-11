@@ -26,7 +26,7 @@ export function importLiteConfig(
         'import-lite/first': 'error',
         'import-lite/newline-after-import': 'error',
         'import-lite/no-mutable-exports': 'error',
-        'import-lite/exports-last': 'error',
+        'import-lite/exports-last': 'off',
         'import-lite/no-named-default': 'error',
 
         // TypeScript handles this natively
